@@ -1,0 +1,386 @@
+/* Adapted for MarkText from Claude-like Theme for Typora.
+ * Upstream: https://github.com/Muyiiiii/Typora_Claude-Like_Theme
+ * Upstream license: MIT, Copyright (c) 2026 Muyiiiii.
+ */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css");
+
+:root {
+  --claude-bg: #faf9f5;
+  --claude-window: #f6f3ed;
+  --claude-surface: #fffdf8;
+  --claude-surface-muted: #f3ede5;
+  --claude-surface-soft: #f8f5ef;
+  --claude-line: #e0d7cb;
+  --claude-line-strong: #d8cbbb;
+  --claude-text: #2b2621;
+  --claude-text-muted: #6e6259;
+  --claude-heading: #1c1815;
+  --claude-accent: #bc6a3a;
+  --claude-accent-dark: #9c5530;
+  --claude-code-text: #7c4a35;
+  --claude-code-bg: #f2eeea;
+  --claude-selection: rgba(188, 106, 58, 0.2);
+  --claude-shadow: 0 1px 0 rgba(43, 38, 33, 0.04), 0 8px 22px -18px rgba(43, 38, 33, 0.36);
+  --claude-font-reading: "Source Serif 4", "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+  --claude-font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
+
+  --themeColor: rgb(188, 106, 58);
+  --themeColor90: rgba(188, 106, 58, 0.9);
+  --themeColor80: rgba(188, 106, 58, 0.8);
+  --themeColor70: rgba(188, 106, 58, 0.7);
+  --themeColor60: rgba(188, 106, 58, 0.6);
+  --themeColor50: rgba(188, 106, 58, 0.5);
+  --themeColor40: rgba(188, 106, 58, 0.4);
+  --themeColor30: rgba(188, 106, 58, 0.3);
+  --themeColor20: rgba(188, 106, 58, 0.2);
+  --themeColor10: rgba(188, 106, 58, 0.1);
+  --highlightColor: rgba(188, 106, 58, 0.16);
+  --selectionColor: var(--claude-selection);
+  --editorColor: rgba(43, 38, 33, 0.88);
+  --editorColor80: rgba(43, 38, 33, 0.8);
+  --editorColor60: rgba(110, 98, 89, 0.72);
+  --editorColor50: rgba(110, 98, 89, 0.5);
+  --editorColor40: rgba(110, 98, 89, 0.4);
+  --editorColor30: rgba(110, 98, 89, 0.3);
+  --editorColor10: rgba(43, 38, 33, 0.1);
+  --editorColor04: rgba(43, 38, 33, 0.04);
+  --editorBgColor: var(--claude-bg);
+  --deleteColor: #b14a40;
+  --iconColor: rgba(110, 98, 89, 0.78);
+  --codeBgColor: var(--claude-code-bg);
+  --codeBlockBgColor: var(--claude-surface-soft);
+  --inputBgColor: rgba(43, 38, 33, 0.05);
+  --focusColor: var(--claude-accent);
+  --tableBorderColor: var(--claude-line);
+  --blockquoteTextColor: var(--claude-text-muted);
+  --blockquoteBorderColor: var(--claude-line-strong);
+  --sideBarBgColor: rgba(246, 243, 237, 0.95);
+  --sideBarColor: var(--claude-text-muted);
+  --sideBarItemHoverBgColor: rgba(188, 106, 58, 0.08);
+  --floatBgColor: rgba(255, 253, 248, 0.98);
+  --floatHoverColor: rgba(188, 106, 58, 0.08);
+  --floatBorderColor: rgba(43, 38, 33, 0.1);
+  --editorAreaWidth: 820px;
+
+  --theme-color: var(--themeColor);
+  --highlight-color: var(--highlightColor);
+  --selection-color: var(--selectionColor);
+  --editor-color: var(--editorColor);
+  --editor-color-80: var(--editorColor80);
+  --editor-color-50: var(--editorColor50);
+  --editor-color-30: var(--editorColor30);
+  --editor-color-10: var(--editorColor10);
+  --editor-color-04: var(--editorColor04);
+  --editor-bg-color: var(--editorBgColor);
+  --editor-area-width: var(--editorAreaWidth);
+  --delete-color: var(--deleteColor);
+  --icon-color: var(--iconColor);
+  --code-block-bg-color: var(--codeBlockBgColor);
+  --table-border-color: var(--tableBorderColor);
+  --input-bg-color: var(--inputBgColor);
+  --float-bg-color: var(--floatBgColor);
+  --float-hover-color: var(--floatHoverColor);
+  --float-border-color: var(--floatBorderColor);
+  --float-shadow: var(--claude-shadow);
+  --link-color: var(--claude-accent-dark);
+  --h1-color: var(--claude-heading);
+  --h2-color: var(--claude-heading);
+  --h3-color: var(--claude-heading);
+  --h4-color: var(--claude-heading);
+  --h5-color: var(--claude-text-muted);
+  --h6-color: var(--claude-text-muted);
+  --blockquote-text-color: var(--blockquoteTextColor);
+  --blockquote-border-color: var(--blockquoteBorderColor);
+  --strong-color: var(--claude-heading);
+  --em-color: var(--claude-accent-dark);
+  --list-marker-color: var(--claude-accent);
+  --hr-color: var(--claude-line);
+}
+
+@media not print {
+  body,
+  #app {
+    background: var(--claude-bg) !important;
+    color: var(--claude-text) !important;
+    font-family: var(--claude-font-ui) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--claude-selection);
+  }
+
+  .title-bar,
+  .title-bar-editor-bg,
+  .title-bar-editor-bg.tabs-visible,
+  .editor-tabs {
+    background: rgba(246, 243, 237, 0.88) !important;
+    border-color: var(--claude-line) !important;
+    box-shadow: none !important;
+  }
+
+  .editor-tabs::after,
+  .editor-tabs ul.tabs-container::after {
+    border-bottom-color: var(--claude-line) !important;
+  }
+
+  .tabs-container > li {
+    background: transparent !important;
+    color: var(--claude-text-muted) !important;
+  }
+
+  .tabs-container > li.active {
+    background: rgba(255, 253, 248, 0.76) !important;
+    border-color: var(--claude-line) !important;
+    color: var(--claude-text) !important;
+  }
+
+  .tabs-container > li.active::after {
+    background: var(--claude-accent) !important;
+  }
+
+  .side-bar,
+  .sidebar {
+    background: var(--sideBarBgColor) !important;
+    border-right: 1px solid var(--claude-line) !important;
+    color: var(--claude-text-muted) !important;
+  }
+
+  .ag-root,
+  .ag-editor,
+  .ag-container,
+  .mu-container {
+    max-width: var(--editor-area-width) !important;
+    font-family: var(--claude-font-reading) !important;
+    font-size: 16px !important;
+    line-height: 1.78 !important;
+    color: var(--claude-text) !important;
+    letter-spacing: 0 !important;
+  }
+
+  .ag-paragraph,
+  .ag-list-item,
+  .ag-table td,
+  .ag-table th,
+  .mu-container p,
+  .mu-container li,
+  .mu-container td,
+  .mu-container th {
+    font-family: var(--claude-font-reading) !important;
+    color: var(--claude-text) !important;
+    line-height: 1.78 !important;
+  }
+
+  .ag-heading,
+  .mu-container h1,
+  .mu-container h2,
+  .mu-container h3,
+  .mu-container h4,
+  .mu-container h5,
+  .mu-container h6 {
+    color: var(--claude-heading) !important;
+    font-family: var(--claude-font-reading) !important;
+    letter-spacing: 0 !important;
+  }
+
+  .ag-heading-1,
+  .mu-container h1 {
+    margin-top: 2.25em !important;
+    margin-bottom: 0.82em !important;
+    padding-bottom: 0.35em !important;
+    border-bottom: 1px solid var(--claude-line) !important;
+    font-size: 2.1em !important;
+    font-weight: 700 !important;
+    line-height: 1.18 !important;
+  }
+
+  .ag-heading-2,
+  .mu-container h2 {
+    margin-top: 2em !important;
+    margin-bottom: 0.65em !important;
+    font-size: 1.58em !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+  }
+
+  .ag-heading-3,
+  .mu-container h3 {
+    margin-top: 1.75em !important;
+    font-size: 1.28em !important;
+    font-weight: 650 !important;
+  }
+
+  .ag-heading-4,
+  .ag-heading-5,
+  .ag-heading-6,
+  .mu-container h4,
+  .mu-container h5,
+  .mu-container h6 {
+    font-family: var(--claude-font-ui) !important;
+    font-size: 1em !important;
+    font-weight: 650 !important;
+    color: var(--claude-text-muted) !important;
+  }
+
+  .ag-link,
+  .mu-container a {
+    color: var(--claude-accent-dark) !important;
+    text-decoration-color: rgba(188, 106, 58, 0.42);
+    text-underline-offset: 3px;
+  }
+
+  .ag-strong,
+  .mu-container strong {
+    color: var(--claude-heading) !important;
+    font-weight: 700;
+  }
+
+  .ag-em,
+  .mu-container em {
+    color: var(--claude-accent-dark) !important;
+  }
+
+  .ag-blockquote,
+  .mu-container blockquote {
+    margin: 1.35em 0 !important;
+    padding: 17px 22px !important;
+    border-left: 4px solid var(--claude-line-strong) !important;
+    border-radius: 0 6px 6px 0 !important;
+    background: var(--claude-surface-muted) !important;
+    color: var(--claude-text-muted) !important;
+    font-family: var(--claude-font-reading) !important;
+    line-height: 1.72 !important;
+  }
+
+  .ag-hr,
+  .mu-container hr,
+  .mu-thematic-break:not(.mu-active)::before {
+    border: 0 !important;
+    border-top: 1px solid var(--claude-line) !important;
+    background: transparent !important;
+  }
+
+  .ag-inline-code,
+  .ag-code,
+  .mu-container code,
+  .mu-container .mu-code {
+    border: 1px solid #d7cec5 !important;
+    border-radius: 4px !important;
+    background: var(--claude-code-bg) !important;
+    color: #b14a40 !important;
+    font-family: var(--claude-font-mono) !important;
+    font-size: 0.9em !important;
+  }
+
+  .ag-code-block,
+  .ag-code-container,
+  .mu-container pre,
+  .mu-container .mu-code-block,
+  .mu-code-block {
+    border: 1px solid var(--claude-line) !important;
+    border-radius: 7px !important;
+    background: var(--claude-surface-soft) !important;
+    box-shadow: var(--claude-shadow);
+  }
+
+  .ag-code-content,
+  .ag-code-block pre,
+  .mu-container pre code,
+  .mu-code-block code,
+  .mu-code-block .CodeMirror {
+    background: transparent !important;
+    color: var(--claude-code-text) !important;
+    font-family: var(--claude-font-mono) !important;
+    line-height: 1.62 !important;
+  }
+
+  .ag-table,
+  .mu-container table {
+    border-collapse: collapse !important;
+    overflow: hidden;
+    border: 1px solid var(--claude-line) !important;
+    border-radius: 7px;
+    background: var(--claude-surface);
+    box-shadow: var(--claude-shadow);
+  }
+
+  .ag-table th,
+  .mu-container table th {
+    background: var(--claude-surface-muted) !important;
+    color: var(--claude-heading) !important;
+    font-family: var(--claude-font-ui) !important;
+    font-weight: 650;
+  }
+
+  .ag-table td,
+  .ag-table th,
+  .mu-container table td,
+  .mu-container table th {
+    border-color: var(--claude-line) !important;
+  }
+
+  .ag-mark,
+  .mu-container mark {
+    background: linear-gradient(transparent 58%, rgba(188, 106, 58, 0.24) 58%);
+    color: inherit;
+  }
+
+  ul.mu-bullet-list > li.mu-list-item::before,
+  .ag-bullet-list-item::before {
+    background: var(--claude-accent) !important;
+  }
+
+  li.mu-task-list-item > input[type="checkbox"]::before,
+  li.mu-task-list-item > span.mu-task-list-checkbox::before,
+  .ag-task-list-item input[type="checkbox"]::before {
+    border: 1.5px solid var(--claude-accent) !important;
+    border-radius: 4px !important;
+    background: var(--claude-surface) !important;
+  }
+
+  li.mu-task-list-item > input.mu-checkbox-checked::before,
+  li.mu-task-list-item > span.mu-checkbox-checked::before,
+  .ag-task-list-item input[type="checkbox"]:checked::before {
+    background: var(--claude-accent) !important;
+  }
+
+  .CodeMirror {
+    background: var(--claude-surface-soft) !important;
+    color: var(--claude-text) !important;
+    font-family: var(--claude-font-mono) !important;
+    line-height: 1.62 !important;
+  }
+
+  .CodeMirror-gutters {
+    background: var(--claude-surface-muted) !important;
+    border-right: 1px solid var(--claude-line) !important;
+  }
+
+  .CodeMirror-linenumber {
+    color: rgba(110, 98, 89, 0.64) !important;
+  }
+
+  .cm-keyword {
+    color: #7b2ff7 !important;
+  }
+
+  .cm-string {
+    color: #2f8f2f !important;
+  }
+
+  .cm-number {
+    color: #c06a2a !important;
+  }
+
+  .cm-variable,
+  .cm-property {
+    color: #2c5ec6 !important;
+  }
+
+  .cm-comment {
+    color: #8f8378 !important;
+    font-style: italic;
+  }
+}

@@ -1,0 +1,252 @@
+/** Claude-like Theme for MarkText export.
+ * Adapted from https://github.com/Muyiiiii/Typora_Claude-Like_Theme
+ * Upstream license: MIT, Copyright (c) 2026 Muyiiiii.
+ */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css");
+
+:root {
+  --claude-bg: #faf9f5;
+  --claude-window: #f6f3ed;
+  --claude-surface: #fffdf8;
+  --claude-surface-muted: #f3ede5;
+  --claude-surface-soft: #f8f5ef;
+  --claude-line: #e0d7cb;
+  --claude-line-strong: #d8cbbb;
+  --claude-text: #2b2621;
+  --claude-text-muted: #6e6259;
+  --claude-heading: #1c1815;
+  --claude-accent: #bc6a3a;
+  --claude-accent-dark: #9c5530;
+  --claude-code-text: #7c4a35;
+  --claude-code-bg: #f2eeea;
+  --claude-font-reading: "Source Serif 4", "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+  --claude-font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
+}
+
+html,
+body {
+  background: var(--claude-bg);
+  color: var(--claude-text);
+}
+
+.hf-container,
+.markdown-body {
+  max-width: 820px;
+  color: var(--claude-text);
+  font-family: var(--claude-font-reading);
+  font-size: 16px;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+}
+
+.markdown-body {
+  padding: 54px 58px;
+  background: var(--claude-surface);
+}
+
+.hf-container {
+  color: var(--claude-text-muted);
+  font-family: var(--claude-font-ui);
+  font-size: 0.75em;
+}
+
+.page-header:not(.simple) .hf-container {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--claude-line);
+}
+
+.page-footer:not(.simple) .hf-container {
+  padding-top: 6px;
+  border-top: 1px solid var(--claude-line);
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--claude-heading);
+  font-family: var(--claude-font-reading);
+  letter-spacing: 0;
+}
+
+.markdown-body h1 {
+  margin-top: 1.8em;
+  margin-bottom: 0.82em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--claude-line);
+  font-size: 2.1em;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.markdown-body h2 {
+  margin-top: 1.75em;
+  margin-bottom: 0.65em;
+  border-bottom: none;
+  font-size: 1.58em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.markdown-body h3 {
+  margin-top: 1.55em;
+  font-size: 1.28em;
+  font-weight: 650;
+}
+
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-family: var(--claude-font-ui);
+  font-size: 1em;
+  font-weight: 650;
+  color: var(--claude-text-muted);
+}
+
+.markdown-body p,
+.markdown-body li,
+.markdown-body td,
+.markdown-body th {
+  color: var(--claude-text);
+  font-family: var(--claude-font-reading);
+  line-height: 1.78;
+}
+
+.markdown-body a {
+  color: var(--claude-accent-dark);
+  text-decoration-color: rgba(188, 106, 58, 0.42);
+  text-underline-offset: 3px;
+}
+
+.markdown-body strong {
+  color: var(--claude-heading);
+  font-weight: 700;
+}
+
+.markdown-body em {
+  color: var(--claude-accent-dark);
+}
+
+.markdown-body blockquote {
+  margin: 1.35em 0;
+  padding: 17px 22px;
+  border-left: 4px solid var(--claude-line-strong);
+  border-radius: 0 6px 6px 0;
+  background: var(--claude-surface-muted);
+  color: var(--claude-text-muted);
+  font-family: var(--claude-font-reading);
+  line-height: 1.72;
+}
+
+.markdown-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body hr {
+  height: 1px;
+  border: 0;
+  background: var(--claude-line);
+}
+
+.markdown-body code,
+.markdown-body tt {
+  border: 1px solid #d7cec5;
+  border-radius: 4px;
+  background: var(--claude-code-bg);
+  color: #b14a40;
+  font-family: var(--claude-font-mono);
+  font-size: 0.9em;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  border: 1px solid var(--claude-line);
+  border-radius: 7px;
+  background: var(--claude-surface-soft);
+  color: var(--claude-code-text);
+  font-family: var(--claude-font-mono);
+  line-height: 1.62;
+}
+
+.markdown-body pre code {
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.markdown-body table {
+  display: table;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--claude-line);
+  border-radius: 7px;
+  background: var(--claude-surface);
+}
+
+.markdown-body table th {
+  background: var(--claude-surface-muted);
+  color: var(--claude-heading);
+  font-family: var(--claude-font-ui);
+  font-weight: 650;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  border-color: var(--claude-line);
+}
+
+.markdown-body img {
+  border-radius: 7px;
+}
+
+.markdown-body mark {
+  background: linear-gradient(transparent 58%, rgba(188, 106, 58, 0.24) 58%);
+  color: inherit;
+}
+
+.toc-container .toc-title {
+  color: var(--claude-accent-dark);
+  font-family: var(--claude-font-ui);
+  font-size: 0.86em;
+  font-weight: 650;
+}
+
+.toc-container ul li span a {
+  color: var(--claude-text-muted);
+}
+
+.toc-container ul li span span.dots {
+  border-bottom-color: var(--claude-line-strong);
+}
+
+.footnotes {
+  color: var(--claude-text-muted);
+  font-size: 0.84em;
+}
+
+.footnotes > hr:first-of-type {
+  width: 220px;
+  height: 1px;
+  background: var(--claude-line-strong);
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  .markdown-body {
+    max-width: none;
+    padding: 0;
+    background: #ffffff;
+  }
+}

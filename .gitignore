@@ -1,0 +1,19 @@
+.DS_Store
+.tmp/
+.npm-cache/
+node_modules/
+
+# Local extracted or copied MarkText bundles.
+index.js
+*.asar
+*.asar.unpacked/
+
+# Rebuildable icon intermediates and discarded icon drafts.
+icon/build/
+icon/lens-marktext-icon-ai.png
+icon/lens-marktext-icon-transparent.png
+icon/lens-marktext-icon.svg
+icon/lens-marktext-icon-peacock-installed-preview.png
+
+# Local backups created by installer scripts.
+*.lens-backup-*
