@@ -18,7 +18,7 @@
 
 | 主题 | 风格 |
 | --- | --- |
-| **Lens Design** | 冷调纸面上的孔雀蓝 / 酒红 / 金色点缀，基于 Lens Design 色彩与排印体系（Noto Sans + Spectral + 霞鹜文楷）。 |
+| **Lens Design** | 冷调纸面上的孔雀蓝 / 酒红 / 金色点缀，基于 Lens Design 色彩与排印体系（Noto Sans + Spectral + 霞鹜文楷）。为中文阅读调优：正文 17px / 行高 1.7、墨色加深，衬线仅用于一二级标题与引文，斜体强调以文楷呈现。 |
 | **Claude-like** | 暖调米白纸面配陶土色强调色，改编自 Typora 的 [Claude-like 主题](https://github.com/Muyiiiii/Typora_Claude-Like_Theme)。标题使用霞鹜文楷 / Source Serif 4，正文使用思源黑体 / Noto Sans SC。 |
 
 两套主题各有两种形态：

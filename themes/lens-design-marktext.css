@@ -63,6 +63,8 @@
   --lens-muted: var(--fg-muted);
   --lens-text: var(--fg-primary);
   --lens-text-soft: var(--fg-secondary);
+  /* CJK readability: body ink one step deeper than ink-500 for dense hanzi strokes. */
+  --lens-text-body: var(--ink-700);
   --lens-ink: var(--ink-900);
   --lens-radius-sm: 2px;
   --lens-radius-md: 6px;
@@ -147,7 +149,8 @@
   --floatHoverColor: rgba(31, 86, 107, 0.06);
   --floatBorderColor: rgba(21, 24, 28, 0.08);
   --maskColor: rgba(236, 239, 242, 0.82);
-  --editorAreaWidth: 820px;
+  /* ~44 CJK chars per line at 17px, inside the 35-45 char comfort range. */
+  --editorAreaWidth: 760px;
 
   --theme-color: var(--themeColor);
   --highlight-color: var(--highlightColor);
@@ -248,9 +251,10 @@
   .mu-container {
     max-width: var(--editor-area-width) !important;
     font-family: var(--lens-font-sans) !important;
-    font-size: 16px !important;
+    /* Lens CJK rule: Chinese body runs 17px at 1.7 line height. */
+    font-size: 17px !important;
     line-height: 1.7 !important;
-    color: var(--lens-text-soft) !important;
+    color: var(--lens-text-body) !important;
     letter-spacing: 0 !important;
   }
 
@@ -263,8 +267,9 @@
   .mu-container td,
   .mu-container th {
     font-family: var(--lens-font-sans) !important;
-    color: var(--lens-text-soft);
+    color: var(--lens-text-body);
     line-height: 1.7;
+    overflow-wrap: break-word;
   }
 
   .ag-heading,
@@ -287,8 +292,9 @@
     border-bottom: 1px solid var(--lens-line);
     font-family: var(--lens-heading-font) !important;
     font-size: 2.4em !important;
-    font-weight: 400 !important;
-    line-height: 1.16 !important;
+    /* Spec H1 weight 600: WenKai strokes are too light at 400 for CJK titles. */
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
   }
 
   .ag-heading-2,
@@ -305,7 +311,8 @@
   .ag-heading-3,
   .mu-container h3 {
     margin-top: 1.75em !important;
-    font-family: var(--lens-heading-font) !important;
+    /* Spec: serif is reserved for quotes and editorial titles; H3 down is sans. */
+    font-family: var(--lens-font-sans) !important;
     font-size: 1.32em !important;
     font-weight: 600 !important;
     color: var(--lens-wine) !important;
@@ -339,6 +346,8 @@
   .ag-em,
   .mu-container em {
     color: var(--lens-wine) !important;
+    /* CJK emphasis: WenKai (kai style) instead of faux-oblique hanzi; Latin gets true Spectral italic. */
+    font-family: var(--lens-font-serif) !important;
   }
 
   .ag-blockquote,

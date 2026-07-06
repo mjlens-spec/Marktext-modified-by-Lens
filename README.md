@@ -18,7 +18,7 @@ The app is ad-hoc signed for local use and is **not Apple notarized**. On first 
 
 | Theme | Style |
 | --- | --- |
-| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design color and typography system (Noto Sans + Spectral + LXGW WenKai). |
+| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design color and typography system (Noto Sans + Spectral + LXGW WenKai). Tuned for Chinese-first reading: 17 px body at 1.7 line height, deepened body ink, serif reserved for H1/H2 and quotes, WenKai for CJK emphasis. |
 | **Claude-like** | Warm cream paper with a terracotta accent, adapted from the Typora [Claude-like theme](https://github.com/Muyiiiii/Typora_Claude-Like_Theme). Headings use LXGW WenKai / Source Serif 4; body text uses Source Han Sans / Noto Sans SC. |
 
 Both themes ship in two forms:

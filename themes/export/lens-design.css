@@ -48,6 +48,8 @@
   --lens-muted: var(--fg-muted);
   --lens-text: var(--fg-primary);
   --lens-text-soft: var(--fg-secondary);
+  /* CJK readability: body ink one step deeper than ink-500 for dense hanzi strokes. */
+  --lens-text-body: var(--ink-700);
   --lens-ink: var(--ink-900);
   --lens-font-sans: "Noto Sans", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
   --lens-font-serif: "Spectral", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
@@ -65,11 +67,13 @@ body {
 
 .hf-container,
 .markdown-body {
-  max-width: 820px;
+  /* ~44 CJK chars per line at 17px, inside the 35-45 char comfort range. */
+  max-width: 760px;
   font-family: var(--lens-font-sans);
-  font-size: 16px;
+  /* Lens CJK rule: Chinese body runs 17px at 1.7 line height. */
+  font-size: 17px;
   line-height: 1.7;
-  color: var(--lens-text-soft);
+  color: var(--lens-text-body);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -112,8 +116,9 @@ body {
   border-bottom: 1px solid var(--lens-line);
   font-family: var(--lens-heading-font);
   font-size: 2.42em;
-  font-weight: 400;
-  line-height: 1.16;
+  /* Spec H1 weight 600: WenKai strokes are too light at 400 for CJK titles. */
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .markdown-body h2 {
@@ -129,7 +134,8 @@ body {
 
 .markdown-body h3 {
   margin-top: 1.55em;
-  font-family: var(--lens-heading-font);
+  /* Spec: serif is reserved for quotes and editorial titles; H3 down is sans. */
+  font-family: var(--lens-font-sans);
   font-size: 1.32em;
   font-weight: 600;
   color: var(--lens-wine);
@@ -148,9 +154,10 @@ body {
 .markdown-body li,
 .markdown-body td,
 .markdown-body th {
-  color: var(--lens-text-soft);
+  color: var(--lens-text-body);
   font-family: var(--lens-font-sans);
   line-height: 1.7;
+  overflow-wrap: break-word;
 }
 
 .markdown-body a {
@@ -166,6 +173,8 @@ body {
 
 .markdown-body em {
   color: var(--lens-wine);
+  /* CJK emphasis: WenKai (kai style) instead of faux-oblique hanzi; Latin gets true Spectral italic. */
+  font-family: var(--lens-font-serif);
 }
 
 .markdown-body blockquote {
