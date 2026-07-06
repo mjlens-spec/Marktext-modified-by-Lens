@@ -10,8 +10,8 @@ The package is designed for a local installed copy of MarkText `0.19.1`. It does
 - `themes/claude-like-marktext.css`: MarkText adaptation of the Typora Claude-like theme.
 - `themes/export/lens-design.css`: HTML/PDF export theme for Lens Design.
 - `themes/export/claude-like.css`: HTML/PDF export theme for Claude-like.
-- `icon/lens-marktext-l-line-hand-final-source.png`: Raw image-generation render for the current L-line hand-writing icon.
-- `icon/lens-marktext-l-line-hand-final-alpha.png`: Transparent PNG source used to build the app icon.
+- `icon/lens-marktext-reference-refined-source.png`: Raw image-generation render for the current reference-refined hand-writing icon.
+- `icon/lens-marktext-reference-refined-alpha.png`: Transparent PNG source used to build the app icon.
 - `icon/lens-marktext-icon.png`: 1024px PNG app icon.
 - `icon/lens-marktext-icon.icns`: macOS ICNS app icon.
 - `icon/lens-marktext-icon-peacock-*.png`: Previous peacock-blue `M` icon sources retained for reference.
@@ -36,7 +36,7 @@ Install user preferences and export themes:
 Build and install the icon:
 
 ```bash
-./scripts/build-icon.sh icon/lens-marktext-l-line-hand-final-alpha.png
+./scripts/build-icon.sh icon/lens-marktext-reference-refined-alpha.png
 ./scripts/install-icon.sh
 ```
 
