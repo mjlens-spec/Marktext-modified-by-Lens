@@ -6,11 +6,11 @@
 @import url("https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css");
 
 :root {
-  --claude-bg: #faf9f5;
-  --claude-window: #f6f3ed;
-  --claude-surface: #fffdf8;
-  --claude-surface-muted: #f3ede5;
-  --claude-surface-soft: #f8f5ef;
+  --claude-bg: #f7f6f3;
+  --claude-window: #f6f5f2;
+  --claude-surface: #fffefd;
+  --claude-surface-muted: #f4f2ee;
+  --claude-surface-soft: #faf9f6;
   --claude-line: #e0d7cb;
   --claude-line-strong: #d8cbbb;
   --claude-text: #2b2621;
@@ -19,8 +19,9 @@
   --claude-accent: #bc6a3a;
   --claude-accent-dark: #9c5530;
   --claude-code-text: #7c4a35;
-  --claude-code-bg: #f2eeea;
-  --claude-font-reading: "Source Serif 4", "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-code-bg: #f4f2ee;
+  --claude-font-heading: "Source Serif 4", "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-font-reading: "Source Han Sans SC", "Source Han Sans CN", "Source Han Sans", "思源黑体", "思源黑体 CN", "Noto Sans CJK SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "IBM Plex Sans", sans-serif;
   --claude-font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
   --claude-font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
 }
@@ -69,7 +70,7 @@ body {
 .markdown-body h5,
 .markdown-body h6 {
   color: var(--claude-heading);
-  font-family: var(--claude-font-reading);
+  font-family: var(--claude-font-heading);
   letter-spacing: 0;
 }
 
@@ -101,7 +102,7 @@ body {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  font-family: var(--claude-font-ui);
+  font-family: var(--claude-font-heading);
   font-size: 1em;
   font-weight: 650;
   color: var(--claude-text-muted);

@@ -95,7 +95,7 @@ main = replaceMarkedBlock(
       case "lens-design":
         return "#f4f6f8";
       case "claude-like":
-        return "#faf9f5";
+        return "#f7f6f3";
       // Lens Design background patch end
 `,
   '      case "dark":'
