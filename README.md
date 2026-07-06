@@ -1,26 +1,43 @@
-# Marktext modified by Lens
+# MarkText modified by Lens
 
-Lens-flavored local customization for MarkText on macOS. This repository adds two built-in MarkText theme options, export CSS themes, and a replacement macOS app icon.
+**English** | [简体中文](README.zh-CN.md)
 
-The package is designed for a local installed copy of MarkText `0.19.1`. It does not include or redistribute MarkText binaries or `app.asar`.
+<img src="icon/lens-marktext-icon.png" alt="Lens MarkText icon" width="128" align="right" />
 
-## Included
+Lens-flavored customization for [MarkText](https://github.com/marktext/marktext) on macOS: two built-in editor themes, matching HTML/PDF export themes, and a replacement app icon in a light-paper hand-writing style.
 
-- `themes/lens-design-marktext.css`: Lens Design editor theme based on the Lens Design color and typography system.
-- `themes/claude-like-marktext.css`: MarkText adaptation of the Typora Claude-like theme.
-- `themes/export/lens-design.css`: HTML/PDF export theme for Lens Design.
-- `themes/export/claude-like.css`: HTML/PDF export theme for Claude-like.
-- `icon/lens-marktext-light-paper-final-alpha.png`: Transparent PNG source used to build the current light-paper hand-writing app icon.
-- `icon/lens-marktext-icon.png`: 1024px PNG app icon.
-- `icon/lens-marktext-icon.icns`: macOS ICNS app icon.
-- `icon/lens-marktext-icon-peacock-*.png`: Previous peacock-blue `M` icon sources retained for reference.
-- `scripts/install-builtin-themes.sh`: Backs up `app.asar`, injects the built-in theme entries, repacks, and ad-hoc signs MarkText.
-- `scripts/install-theme.sh`: Backs up `preferences.json`, installs export themes, clears Custom CSS, and selects `lens-design`.
-- `scripts/install-icon.sh`: Backs up MarkText app icon files, replaces them, ad-hoc signs the app, and refreshes Quick Look cache.
+This package targets a locally installed MarkText `0.19.1`. The source tree does not include or redistribute MarkText binaries or `app.asar` — see [Download](#download) for the prebuilt DMG.
 
-## Install
+## Download
 
-Install built-in theme options:
+Prebuilt `arm64` macOS DMGs are published on the [Releases page](https://github.com/mjlens-spec/Marktext-modified-by-Lens/releases). Each DMG contains a MarkText `0.19.1` app bundle with the Lens themes and icon already applied, plus license and notice materials.
+
+The app is ad-hoc signed for local use and is **not Apple notarized**. On first launch, macOS Gatekeeper may require opening it from Finder with Control-click → Open.
+
+## Themes
+
+| Theme | Style |
+| --- | --- |
+| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design color and typography system (Noto Sans + Spectral + LXGW WenKai). |
+| **Claude-like** | Warm cream paper with a terracotta accent, adapted from the Typora [Claude-like theme](https://github.com/Muyiiiii/Typora_Claude-Like_Theme). Headings use LXGW WenKai / Source Serif 4; body text uses Source Han Sans / Noto Sans SC. |
+
+Both themes ship in two forms:
+
+- Built-in editor themes (`themes/lens-design-marktext.css`, `themes/claude-like-marktext.css`), injected into MarkText's theme picker.
+- HTML/PDF export themes (`themes/export/lens-design.css`, `themes/export/claude-like.css`).
+
+## Repository layout
+
+- `themes/` — editor and export CSS themes.
+- `icon/` — app icon sources and outputs: `lens-marktext-icon.png` (1024 px), `lens-marktext-icon.icns`, the light-paper source PNG, and earlier drafts kept for reference.
+- `scripts/install-builtin-themes.sh` — backs up `app.asar`, injects the built-in theme entries, repacks, and ad-hoc signs MarkText.
+- `scripts/install-theme.sh` — backs up `preferences.json`, installs the export themes, clears Custom CSS, and selects `lens-design`.
+- `scripts/build-icon.sh` — builds the `.icns` from a PNG source (requires ImageMagick: `brew install imagemagick`).
+- `scripts/install-icon.sh` — backs up the MarkText app icon files, replaces them, ad-hoc signs the app, and refreshes the icon cache.
+
+## Install from source
+
+Install the built-in theme options:
 
 ```bash
 ./scripts/install-builtin-themes.sh
@@ -39,15 +56,9 @@ Build and install the icon:
 ./scripts/install-icon.sh
 ```
 
-## macOS DMG Release
+Restart MarkText after installing themes or the icon. Finder and Dock icon caches can lag; quit and relaunch MarkText once if the old icon is still visible.
 
-GitHub release assets may include an `arm64` macOS DMG built from a local MarkText `0.19.1` app with the Lens themes and icon applied.
-
-The app is ad-hoc signed for local use and is not Apple notarized. On a clean macOS install, Gatekeeper may require opening it from Finder with Control-click > Open.
-
-Restart MarkText after installing themes or icon. Finder and Dock icon caches can lag; quit and relaunch MarkText once if the old icon is still visible.
-
-## Lens Design Mapping
+## Lens Design palette
 
 - Peacock blue: `#1F566B`
 - Wine: `#8E3B46`
@@ -69,9 +80,9 @@ The app patcher targets the MarkText `0.19.1` bundle structure on macOS:
 
 If MarkText changes its bundle structure in a future version, inspect the patch script before running it.
 
-## License and Notices
+## License and notices
 
-This project is MIT licensed. See `LICENSE` and `NOTICE.md` for upstream copyright, license, font, and trademark notes.
+This project is MIT licensed. See [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md) for upstream copyright, license, font, and trademark notes.
 
 Sources:
 
