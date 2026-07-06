@@ -22,7 +22,7 @@
   --claude-code-bg: #f4f2ee;
   --claude-selection: rgba(188, 106, 58, 0.2);
   --claude-shadow: 0 1px 0 rgba(43, 38, 33, 0.04), 0 8px 22px -18px rgba(43, 38, 33, 0.36);
-  --claude-font-heading: "Source Serif 4", "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-font-heading: "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Source Serif 4", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
   --claude-font-reading: "Source Han Sans SC", "Source Han Sans CN", "Source Han Sans", "思源黑体", "思源黑体 CN", "Noto Sans CJK SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "IBM Plex Sans", sans-serif;
   --claude-font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
   --claude-font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
