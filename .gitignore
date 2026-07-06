@@ -22,6 +22,8 @@ icon/lens-marktext-paper-hand-icon-source.png
 icon/lens-marktext-paper-hand-icon-alpha.png
 icon/lens-marktext-l-line-hand-icon-source.png
 icon/lens-marktext-l-line-hand-icon-alpha.png
+icon/lens-marktext-*confirmation*.png
+icon/lens-marktext-reference-refined-margin-preview*.png
 
 # Local backups created by installer scripts.
 *.lens-backup-*
