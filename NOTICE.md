@@ -1,6 +1,8 @@
 # Notices
 
-This repository contains Lens-specific themes, icons, and installer scripts for a local MarkText installation. It does not distribute MarkText binaries, `app.asar`, or upstream MarkText application source.
+This repository contains Lens-specific themes, icons, and installer scripts for a local MarkText installation. The source tree does not commit MarkText binaries, `app.asar`, or upstream MarkText application source.
+
+GitHub release assets may include a macOS DMG containing an ad-hoc signed, Lens-modified copy of MarkText for local installation. Those release assets are modified redistributions of MarkText and include this notice plus upstream license materials.
 
 ## Project License
 
@@ -14,6 +16,8 @@ MarkText is an independent open-source project licensed under MIT:
 - License: https://github.com/marktext/marktext/blob/develop/LICENSE
 - Copyright (c) 2017-present Luo Ran
 - Copyright (c) 2018-present MarkText Contributors
+
+The MarkText MIT license text is included in `UPSTREAM_LICENSES/MarkText-MIT-LICENSE.txt`.
 
 The Claude-like theme CSS in this repository is adapted from the MIT-licensed Typora Claude-like theme:
 

@@ -10,11 +10,11 @@ The package is designed for a local installed copy of MarkText `0.19.1`. It does
 - `themes/claude-like-marktext.css`: MarkText adaptation of the Typora Claude-like theme.
 - `themes/export/lens-design.css`: HTML/PDF export theme for Lens Design.
 - `themes/export/claude-like.css`: HTML/PDF export theme for Claude-like.
-- `icon/lens-marktext-icon-peacock-source.png`: Raw image-generation render with bold peacock-blue `M`.
-- `icon/lens-marktext-icon-peacock-alpha.png`: Transparent PNG source used to build the app icon.
-- `icon/lens-marktext-icon-peacock-preview.png`: Grey-background preview for checking alpha edges.
+- `icon/lens-marktext-l-line-hand-final-source.png`: Raw image-generation render for the current L-line hand-writing icon.
+- `icon/lens-marktext-l-line-hand-final-alpha.png`: Transparent PNG source used to build the app icon.
 - `icon/lens-marktext-icon.png`: 1024px PNG app icon.
 - `icon/lens-marktext-icon.icns`: macOS ICNS app icon.
+- `icon/lens-marktext-icon-peacock-*.png`: Previous peacock-blue `M` icon sources retained for reference.
 - `scripts/install-builtin-themes.sh`: Backs up `app.asar`, injects the built-in theme entries, repacks, and ad-hoc signs MarkText.
 - `scripts/install-theme.sh`: Backs up `preferences.json`, installs export themes, clears Custom CSS, and selects `lens-design`.
 - `scripts/install-icon.sh`: Backs up MarkText app icon files, replaces them, ad-hoc signs the app, and refreshes Quick Look cache.
@@ -36,9 +36,15 @@ Install user preferences and export themes:
 Build and install the icon:
 
 ```bash
-./scripts/build-icon.sh icon/lens-marktext-icon-peacock-alpha.png
+./scripts/build-icon.sh icon/lens-marktext-l-line-hand-final-alpha.png
 ./scripts/install-icon.sh
 ```
+
+## macOS DMG Release
+
+GitHub release assets may include an `arm64` macOS DMG built from a local MarkText `0.19.1` app with the Lens themes and icon applied.
+
+The app is ad-hoc signed for local use and is not Apple notarized. On a clean macOS install, Gatekeeper may require opening it from Finder with Control-click > Open.
 
 Restart MarkText after installing themes or icon. Finder and Dock icon caches can lag; quit and relaunch MarkText once if the old icon is still visible.
 

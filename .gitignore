@@ -2,6 +2,7 @@
 .tmp/
 .npm-cache/
 node_modules/
+releases/
 
 # Local extracted or copied MarkText bundles.
 index.js
@@ -14,6 +15,13 @@ icon/lens-marktext-icon-ai.png
 icon/lens-marktext-icon-transparent.png
 icon/lens-marktext-icon.svg
 icon/lens-marktext-icon-peacock-installed-preview.png
+icon/lens-marktext-writing-icon-concept.png
+icon/lens-marktext-writing-icon-line-concept.png
+icon/lens-marktext-writing-icon-line-alpha.png
+icon/lens-marktext-paper-hand-icon-source.png
+icon/lens-marktext-paper-hand-icon-alpha.png
+icon/lens-marktext-l-line-hand-icon-source.png
+icon/lens-marktext-l-line-hand-icon-alpha.png
 
 # Local backups created by installer scripts.
 *.lens-backup-*
