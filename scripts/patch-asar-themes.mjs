@@ -131,6 +131,32 @@ main = replaceMarkedBlock(
   '    {\n      label: t("menu.theme.ayuLight"),'
 )
 
+main = replaceMarkedBlock(
+  main,
+  '      // Lens Design activate ready guard patch start',
+  '      // Lens Design activate ready guard patch end',
+  `      // Lens Design activate ready guard patch start
+      if (!electron.app.isReady()) {
+        return;
+      }
+      // Lens Design activate ready guard patch end
+`,
+  '      if (this._windowManager.windowCount === 0) {'
+)
+
+main = replaceMarkedBlock(
+  main,
+  '    // Lens Design app ready guard patch start',
+  '    // Lens Design app ready guard patch end',
+  `    // Lens Design app ready guard patch start
+    if (!electron.app.isReady()) {
+      return;
+    }
+    // Lens Design app ready guard patch end
+`,
+  '    const { _args: args2, _openFilesCache } = this;'
+)
+
 fs.writeFileSync(mainPath, main)
 
 console.log(`Patched renderer bundle: ${rendererPath}`)
