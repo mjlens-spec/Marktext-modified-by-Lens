@@ -4,7 +4,7 @@
 
 <img src="icon/lens-marktext-icon.png" alt="Lens MarkText icon" width="128" align="right" />
 
-Lens-flavored customization for [MarkText](https://github.com/marktext/marktext) on macOS: two built-in editor themes, matching HTML/PDF export themes, and a replacement app icon in a light-paper hand-writing style.
+Lens-flavored customization for [MarkText](https://github.com/marktext/marktext) on macOS: two built-in editor themes, matching HTML/PDF export themes, and a replacement app icon built around the calligraphic Chinese radical `攵` on warm paper.
 
 This package targets a locally installed MarkText `0.19.1`. The source tree does not include or redistribute MarkText binaries or `app.asar` — see [Download](#download) for the prebuilt DMG.
 
@@ -31,7 +31,7 @@ Both themes ship in two forms:
 ## Repository layout
 
 - `themes/` — editor and export CSS themes.
-- `icon/` — app icon sources and outputs: `lens-marktext-icon.png` (1024 px), `lens-marktext-icon.icns`, the light-paper source PNG, and earlier drafts kept for reference.
+- `icon/` — app icon sources and outputs: `lens-marktext-pu-v1-source.png` (original generated source), `lens-marktext-pu-v1-alpha.png` (production source with transparent corners), `lens-marktext-icon.png` (1024 px), `lens-marktext-icon.icns`, the 1.0 production spec, and earlier drafts kept for reference.
 - `scripts/install-builtin-themes.sh` — backs up `app.asar`, injects the built-in theme entries, repacks, and ad-hoc signs MarkText.
 - `scripts/install-theme.sh` — backs up `preferences.json`, installs the export themes, clears Custom CSS, and selects `lens-design`.
 - `scripts/build-icon.sh` — builds the `.icns` from a PNG source (requires ImageMagick: `brew install imagemagick`).
@@ -54,9 +54,11 @@ Install user preferences and export themes:
 Build and install the icon:
 
 ```bash
-./scripts/build-icon.sh icon/lens-marktext-light-paper-final-alpha.png
+./scripts/build-icon.sh
 ./scripts/install-icon.sh
 ```
+
+The default icon source is the version 1.0 calligraphic `攵` asset. Pass another PNG or SVG path to `build-icon.sh` to build an alternate icon without changing the default.
 
 Restart MarkText after installing themes or the icon. Finder and Dock icon caches can lag; quit and relaunch MarkText once if the old icon is still visible.
 
