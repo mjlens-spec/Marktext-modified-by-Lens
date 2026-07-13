@@ -76,7 +76,11 @@
   --lens-font-display: "Spectral", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
   --lens-font-wordmark: "Cormorant Garamond", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
   --lens-font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-  --lens-heading-font: var(--lens-font-serif);
+  /* Reading typography roles. Override these three slots to tune a theme's hierarchy. */
+  --reading-font-title: var(--lens-font-wordmark);
+  --reading-font-heading: var(--lens-font-display);
+  --reading-font-body: var(--lens-font-sans);
+  --reading-font-quote: var(--lens-font-serif);
 
   --themeColor: rgb(31, 86, 107);
   --themeColor90: rgba(31, 86, 107, 0.9);
@@ -250,7 +254,7 @@
   .ag-container,
   .mu-container {
     max-width: var(--editor-area-width) !important;
-    font-family: var(--lens-font-sans) !important;
+    font-family: var(--reading-font-body) !important;
     /* Lens CJK rule: Chinese body runs 17px at 1.7 line height. */
     font-size: 17px !important;
     line-height: 1.7 !important;
@@ -266,7 +270,7 @@
   .mu-container li,
   .mu-container td,
   .mu-container th {
-    font-family: var(--lens-font-sans) !important;
+    font-family: var(--reading-font-body) !important;
     color: var(--lens-text-body);
     line-height: 1.7;
     overflow-wrap: break-word;
@@ -290,7 +294,7 @@
     margin-bottom: 0.8em !important;
     padding-bottom: 0.32em;
     border-bottom: 1px solid var(--lens-line);
-    font-family: var(--lens-heading-font) !important;
+    font-family: var(--reading-font-title) !important;
     font-size: 2.4em !important;
     /* Spec H1 weight 600: WenKai strokes are too light at 400 for CJK titles. */
     font-weight: 600 !important;
@@ -301,7 +305,7 @@
   .mu-container h2 {
     margin-top: 2.1em !important;
     margin-bottom: 0.7em !important;
-    font-family: var(--lens-heading-font) !important;
+    font-family: var(--reading-font-heading) !important;
     font-size: 1.78em !important;
     font-weight: 600 !important;
     line-height: 1.22 !important;
@@ -311,8 +315,7 @@
   .ag-heading-3,
   .mu-container h3 {
     margin-top: 1.75em !important;
-    /* Spec: serif is reserved for quotes and editorial titles; H3 down is sans. */
-    font-family: var(--lens-font-sans) !important;
+    font-family: var(--reading-font-heading) !important;
     font-size: 1.32em !important;
     font-weight: 600 !important;
     color: var(--lens-wine) !important;
@@ -324,7 +327,7 @@
   .mu-container h4,
   .mu-container h5,
   .mu-container h6 {
-    font-family: var(--lens-font-sans) !important;
+    font-family: var(--reading-font-heading) !important;
     font-size: 1.05em !important;
     font-weight: 600 !important;
     color: var(--lens-blue-ink) !important;
@@ -359,7 +362,7 @@
     background: rgba(255, 255, 255, 0.78) !important;
     box-shadow: inset 0 0 0 1px rgba(224, 228, 233, 0.72);
     color: var(--lens-text-soft) !important;
-    font-family: var(--lens-font-serif) !important;
+    font-family: var(--reading-font-quote) !important;
     line-height: 1.7 !important;
   }
 

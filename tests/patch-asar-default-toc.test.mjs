@@ -18,31 +18,31 @@ const patchTheme = (css) => {
 const themes = [
   // Light Themes (alphabetical)
 ];
-const rightColumn = ref$1("files");
+const rightColumn = /* @__PURE__ */ ref$1("files");
 function RESTORE_BUFFERED_STATE(state) {
   const layout2 = createBufferedLayoutState(state);
-  SET_LAYOUT(
-    {
-      rightColumn: layout2.rightColumn,
-      showSideBar: layout2.showSideBar,
-      showTabBar: layout2.showTabBar
-    },
-    { scheduleBufferUpdate: false }
-  );
+    SET_LAYOUT(
+      {
+        rightColumn: layout2.rightColumn,
+        showSideBar: layout2.showSideBar,
+        showTabBar: layout2.showTabBar
+      },
+      { scheduleBufferUpdate: false }
+    );
 }
 function OPEN_PROJECT(pathname) {
-  const layout2 = {
-    rightColumn: "files",
-    showSideBar: true,
-    showTabBar: true
-  };
+    const layout2 = {
+      rightColumn: "files",
+      showSideBar: true,
+      showTabBar: true
+    };
 }
 function LISTEN_FOR_BOOTSTRAP_WINDOW() {
-  layoutStore.SET_LAYOUT({
-    rightColumn: "files",
-    showSideBar: !!sideBarVisibility2,
-    showTabBar: !!tabBarVisibility2
-  });
+        layoutStore.SET_LAYOUT({
+          rightColumn: "files",
+          showSideBar: !!sideBarVisibility2,
+          showTabBar: !!tabBarVisibility2
+        });
 }
 `
 

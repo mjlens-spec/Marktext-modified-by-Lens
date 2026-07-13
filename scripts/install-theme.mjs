@@ -31,6 +31,7 @@ prefs = {
   theme: 'lens-design',
   followSystemTheme: false,
   lightModeTheme: 'lens-design',
+  sideBarVisibility: true,
   editorFontFamily: 'Noto Sans SC',
   fontSize: 16,
   lineHeight: 1.7,

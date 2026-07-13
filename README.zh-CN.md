@@ -18,13 +18,15 @@
 
 | 主题 | 风格 |
 | --- | --- |
-| **Lens Design** | 冷调纸面上的孔雀蓝 / 酒红 / 金色点缀，基于 Lens Design 色彩与排印体系（Noto Sans + Spectral + 霞鹜文楷）。为中文阅读调优：正文 17px / 行高 1.7、墨色加深，衬线仅用于一二级标题与引文，斜体强调以文楷呈现。 |
+| **Lens Design** | 冷调纸面上的孔雀蓝 / 酒红 / 金色点缀，基于 Lens Design 色彩与排印体系。大标题使用 Cormorant Garamond / 霞鹜文楷，小标题使用 Spectral / 霞鹜文楷，正文使用 Noto Sans / Noto Sans SC；正文为 17 px、行高 1.7。 |
 | **Claude-like** | 暖调米白纸面配陶土色强调色，改编自 Typora 的 [Claude-like 主题](https://github.com/Muyiiiii/Typora_Claude-Like_Theme)。标题使用霞鹜文楷 / Source Serif 4，正文使用思源黑体 / Noto Sans SC。 |
 
 两套主题各有两种形态：
 
 - 内置编辑器主题（`themes/lens-design-marktext.css`、`themes/claude-like-marktext.css`），注入 MarkText 的主题选择器。
 - HTML/PDF 导出主题（`themes/export/lens-design.css`、`themes/export/claude-like.css`）。
+- 阅读排版提供 `--reading-font-title`、`--reading-font-heading`、`--reading-font-body` 三个独立字体槽位，主题可以分别设定大标题、小标题和正文。
+- 启动时默认展开左侧侧栏，并打开当前文档的目录（TOC）。
 
 ## 仓库结构
 
@@ -69,6 +71,7 @@
 - 排印字体：`Spectral`、`霞鹜文楷`、`Noto Serif SC`，回退 Georgia
 - 字标字体：`Cormorant Garamond`
 - 等宽字体：`JetBrains Mono`、`SF Mono`，回退 Menlo
+- 阅读映射：大标题使用字标字体，小标题使用 display 字体，正文使用无衬线字体；修改三个 `--reading-font-*` 变量即可独立换字。
 
 ## 兼容性
 

@@ -18,13 +18,15 @@ The app is ad-hoc signed for local use and is **not Apple notarized**. On first 
 
 | Theme | Style |
 | --- | --- |
-| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design color and typography system (Noto Sans + Spectral + LXGW WenKai). Tuned for Chinese-first reading: 17 px body at 1.7 line height, deepened body ink, serif reserved for H1/H2 and quotes, WenKai for CJK emphasis. |
+| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design typography system. Large titles use Cormorant Garamond / LXGW WenKai, smaller headings use Spectral / LXGW WenKai, and body copy uses Noto Sans / Noto Sans SC at 17 px with a 1.7 line height. |
 | **Claude-like** | Warm cream paper with a terracotta accent, adapted from the Typora [Claude-like theme](https://github.com/Muyiiiii/Typora_Claude-Like_Theme). Headings use LXGW WenKai / Source Serif 4; body text uses Source Han Sans / Noto Sans SC. |
 
 Both themes ship in two forms:
 
 - Built-in editor themes (`themes/lens-design-marktext.css`, `themes/claude-like-marktext.css`), injected into MarkText's theme picker.
 - HTML/PDF export themes (`themes/export/lens-design.css`, `themes/export/claude-like.css`).
+- Three independent reading font slots (`--reading-font-title`, `--reading-font-heading`, and `--reading-font-body`) let each theme control large titles, smaller headings, and body copy separately.
+- The left sidebar opens to the current document's table of contents on startup.
 
 ## Repository layout
 
@@ -69,6 +71,7 @@ Restart MarkText after installing themes or the icon. Finder and Dock icon cache
 - Editorial fonts: `Spectral`, `LXGW WenKai`, `Noto Serif SC`, Georgia fallback
 - Wordmark font: `Cormorant Garamond`
 - Mono: `JetBrains Mono`, `SF Mono`, Menlo fallback
+- Reading roles: wordmark for large titles, display for smaller headings, and sans for body copy; override the three `--reading-font-*` variables to change them independently.
 
 ## Compatibility
 

@@ -41,6 +41,17 @@ const replaceMarkedBlock = (source, start, end, replacement, anchor) => {
   return source.replace(anchor, `${replacement}${anchor}`)
 }
 
+const replaceMarkedReplacement = (source, start, end, replacement, anchor) => {
+  const marked = new RegExp(`${escapeRegExp(start)}\\n[\\s\\S]*?\\n${escapeRegExp(end)}\\n`, 'm')
+  if (marked.test(source)) {
+    return source.replace(marked, replacement)
+  }
+  if (!source.includes(anchor)) {
+    throw new Error(`Missing patch anchor: ${anchor}`)
+  }
+  return source.replace(anchor, replacement)
+}
+
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 let renderer = fs.readFileSync(rendererPath, 'utf8')
@@ -82,6 +93,80 @@ renderer = replaceMarkedBlock(
   // Lens Design theme list patch end
 `,
   '  // Light Themes (alphabetical)'
+)
+
+renderer = replaceMarkedReplacement(
+  renderer,
+  '// Lens Design default TOC state patch start',
+  '// Lens Design default TOC state patch end',
+  `// Lens Design default TOC state patch start
+const rightColumn = /* @__PURE__ */ ref$1("toc");
+// Lens Design default TOC state patch end
+`,
+  'const rightColumn = /* @__PURE__ */ ref$1("files");'
+)
+
+renderer = replaceMarkedReplacement(
+  renderer,
+  '    // Lens Design restored TOC state patch start',
+  '    // Lens Design restored TOC state patch end',
+  `    // Lens Design restored TOC state patch start
+    SET_LAYOUT(
+      {
+        rightColumn: "toc",
+        showSideBar: true,
+        showTabBar: layout2.showTabBar
+      },
+      { scheduleBufferUpdate: false }
+    );
+    // Lens Design restored TOC state patch end
+`,
+  `    SET_LAYOUT(
+      {
+        rightColumn: layout2.rightColumn,
+        showSideBar: layout2.showSideBar,
+        showTabBar: layout2.showTabBar
+      },
+      { scheduleBufferUpdate: false }
+    );`
+)
+
+renderer = replaceMarkedReplacement(
+  renderer,
+  '    // Lens Design project TOC state patch start',
+  '    // Lens Design project TOC state patch end',
+  `    // Lens Design project TOC state patch start
+    const layout2 = {
+      rightColumn: "toc",
+      showSideBar: true,
+      showTabBar: true
+    };
+    // Lens Design project TOC state patch end
+`,
+  `    const layout2 = {
+      rightColumn: "files",
+      showSideBar: true,
+      showTabBar: true
+    };`
+)
+
+renderer = replaceMarkedReplacement(
+  renderer,
+  '        // Lens Design bootstrap TOC state patch start',
+  '        // Lens Design bootstrap TOC state patch end',
+  `        // Lens Design bootstrap TOC state patch start
+        layoutStore.SET_LAYOUT({
+          rightColumn: "toc",
+          showSideBar: true,
+          showTabBar: !!tabBarVisibility2
+        });
+        // Lens Design bootstrap TOC state patch end
+`,
+  `        layoutStore.SET_LAYOUT({
+          rightColumn: "files",
+          showSideBar: !!sideBarVisibility2,
+          showTabBar: !!tabBarVisibility2
+        });`
 )
 
 fs.writeFileSync(rendererPath, renderer)

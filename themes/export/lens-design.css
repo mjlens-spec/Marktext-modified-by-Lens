@@ -56,7 +56,11 @@
   --lens-font-display: "Spectral", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
   --lens-font-wordmark: "Cormorant Garamond", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
   --lens-font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-  --lens-heading-font: var(--lens-font-serif);
+  /* Reading typography roles. Override these three slots to tune a theme's hierarchy. */
+  --reading-font-title: var(--lens-font-wordmark);
+  --reading-font-heading: var(--lens-font-display);
+  --reading-font-body: var(--lens-font-sans);
+  --reading-font-quote: var(--lens-font-serif);
 }
 
 html,
@@ -69,7 +73,7 @@ body {
 .markdown-body {
   /* ~44 CJK chars per line at 17px, inside the 35-45 char comfort range. */
   max-width: 760px;
-  font-family: var(--lens-font-sans);
+  font-family: var(--reading-font-body);
   /* Lens CJK rule: Chinese body runs 17px at 1.7 line height. */
   font-size: 17px;
   line-height: 1.7;
@@ -114,7 +118,7 @@ body {
   margin-bottom: 0.75em;
   padding-bottom: 0.32em;
   border-bottom: 1px solid var(--lens-line);
-  font-family: var(--lens-heading-font);
+  font-family: var(--reading-font-title);
   font-size: 2.42em;
   /* Spec H1 weight 600: WenKai strokes are too light at 400 for CJK titles. */
   font-weight: 600;
@@ -125,7 +129,7 @@ body {
   margin-top: 1.8em;
   margin-bottom: 0.7em;
   border-bottom: none;
-  font-family: var(--lens-heading-font);
+  font-family: var(--reading-font-heading);
   font-size: 1.78em;
   font-weight: 600;
   line-height: 1.22;
@@ -134,8 +138,7 @@ body {
 
 .markdown-body h3 {
   margin-top: 1.55em;
-  /* Spec: serif is reserved for quotes and editorial titles; H3 down is sans. */
-  font-family: var(--lens-font-sans);
+  font-family: var(--reading-font-heading);
   font-size: 1.32em;
   font-weight: 600;
   color: var(--lens-wine);
@@ -144,7 +147,7 @@ body {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  font-family: var(--lens-font-sans);
+  font-family: var(--reading-font-heading);
   font-size: 1.05em;
   font-weight: 600;
   color: var(--lens-blue-ink);
@@ -155,7 +158,7 @@ body {
 .markdown-body td,
 .markdown-body th {
   color: var(--lens-text-body);
-  font-family: var(--lens-font-sans);
+  font-family: var(--reading-font-body);
   line-height: 1.7;
   overflow-wrap: break-word;
 }
@@ -184,7 +187,7 @@ body {
   border-radius: 0 6px 6px 0;
   background: var(--lens-paper);
   color: var(--lens-text-soft);
-  font-family: var(--lens-font-serif);
+  font-family: var(--reading-font-quote);
   line-height: 1.7;
 }
 
