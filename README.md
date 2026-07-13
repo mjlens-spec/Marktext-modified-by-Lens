@@ -4,15 +4,17 @@
 
 <img src="icon/lens-marktext-icon.png" alt="Lens MarkText icon" width="128" align="right" />
 
-Lens-flavored customization for [MarkText](https://github.com/marktext/marktext) on macOS: two built-in editor themes, matching HTML/PDF export themes, and a replacement app icon built around the calligraphic Chinese radical `攵` on warm paper.
+Lens-flavored customization for [MarkText](https://github.com/marktext/marktext) on macOS: two built-in editor themes, matching HTML/PDF export themes, and a replacement app icon built around the calligraphic Chinese radical `攵` on warm paper. Lens `1.0.0` is based on MarkText `0.19.1` and follows this repository's GitHub Releases for subsequent updates.
 
 This package targets a locally installed MarkText `0.19.1`. The source tree does not include or redistribute MarkText binaries or `app.asar` — see [Download](#download) for the prebuilt DMG.
 
 ## Download
 
-Prebuilt `arm64` macOS DMGs are published on the [Releases page](https://github.com/mjlens-spec/Marktext-modified-by-Lens/releases). Each DMG contains a MarkText `0.19.1` app bundle with the Lens themes and icon already applied, plus license and notice materials.
+Prebuilt `arm64` macOS DMGs are published on the [Releases page](https://github.com/mjlens-spec/Marktext-modified-by-Lens/releases). Each DMG contains the MarkText Lens app with the themes and icon already applied, plus license and notice materials.
 
-The app is ad-hoc signed for local use and is **not Apple notarized**. On first launch, macOS Gatekeeper may require opening it from Finder with Control-click → Open.
+Starting with `1.0.0`, the app silently checks this repository's latest stable release 15 seconds after the first window opens. It asks before downloading and installing a newer version and stays quiet when already current. MarkText's Check for Updates menu remains available. Older builds still point to MarkText's upstream update feed, so they need a one-time manual install of `1.0.0`; later versions then follow this repository automatically.
+
+The app uses an ad-hoc signature with a stable application requirement and is **not Apple notarized**. That stable requirement lets releases validate one another; downloads are also protected by GitHub HTTPS and the SHA-512 digest in `latest-mac.yml`. On first launch, macOS Gatekeeper may require opening it from Finder with Control-click → Open.
 
 ## Themes
 
@@ -36,6 +38,7 @@ Both themes ship in two forms:
 - `scripts/install-theme.sh` — backs up `preferences.json`, installs the export themes, clears Custom CSS, and selects `lens-design`.
 - `scripts/build-icon.sh` — builds the `.icns` from a PNG source (requires ImageMagick: `brew install imagemagick`).
 - `scripts/install-icon.sh` — backs up the MarkText app icon files, replaces them, ad-hoc signs the app, and refreshes the icon cache.
+- `scripts/build-release.sh` — builds the app with a stable application requirement, updater ZIP, `latest-mac.yml`, DMG, and checksum files.
 
 ## Install from source
 

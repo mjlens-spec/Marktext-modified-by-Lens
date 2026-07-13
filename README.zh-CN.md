@@ -4,15 +4,17 @@
 
 <img src="icon/lens-marktext-icon.png" alt="Lens MarkText 图标" width="128" align="right" />
 
-针对 macOS 上 [MarkText](https://github.com/marktext/marktext) 的 Lens 风格定制包：两套内置编辑器主题、配套的 HTML/PDF 导出主题，以及一枚以书法「攵」反文旁为主体、使用暖白纸底的替换版应用图标。
+针对 macOS 上 [MarkText](https://github.com/marktext/marktext) 的 Lens 风格定制包：两套内置编辑器主题、配套的 HTML/PDF 导出主题，以及一枚以书法「攵」反文旁为主体、使用暖白纸底的替换版应用图标。Lens `1.0.0` 以 MarkText `0.19.1` 为基础，并通过本仓库的 GitHub Release 提供后续自动更新。
 
 本项目面向本地已安装的 MarkText `0.19.1`。源码仓库不包含、也不再分发 MarkText 二进制文件或 `app.asar` —— 预构建的 DMG 见[下载](#下载)。
 
 ## 下载
 
-预构建的 `arm64` macOS DMG 发布在 [Releases 页面](https://github.com/mjlens-spec/Marktext-modified-by-Lens/releases)。每个 DMG 内含已应用 Lens 主题与图标的 MarkText `0.19.1` 应用，并附带许可证与声明文件。
+预构建的 `arm64` macOS DMG 发布在 [Releases 页面](https://github.com/mjlens-spec/Marktext-modified-by-Lens/releases)。每个 DMG 内含已应用 Lens 主题与图标的 MarkText Lens 应用，并附带许可证与声明文件。
 
-应用仅做了本地使用的 ad-hoc 签名，**未经 Apple 公证**。首次启动时，macOS Gatekeeper 可能要求在访达中按住 Control 点击 → 打开。
+从 `1.0.0` 开始，应用会在首个窗口打开 15 秒后静默检查本仓库的最新稳定版。发现新版时会询问是否下载并安装；没有新版时不打扰。也可以随时使用 MarkText 菜单中的「检查更新」。旧版仍指向 MarkText 官方更新源，因此需要手动安装一次 `1.0.0`，之后才会跟随这里的 Release 自动更新。
+
+应用仅做了带稳定应用标识的 ad-hoc 签名，**未经 Apple 公证**。该标识供同一应用的更新包互相校验；更新文件同时使用 GitHub HTTPS 和 `latest-mac.yml` 中的 SHA-512 校验。首次启动时，macOS Gatekeeper 可能要求在访达中按住 Control 点击 → 打开。
 
 ## 主题
 
@@ -36,6 +38,7 @@
 - `scripts/install-theme.sh` — 备份 `preferences.json`，安装导出主题，清空 Custom CSS，并选中 `lens-design`。
 - `scripts/build-icon.sh` — 从 PNG 源图构建 `.icns`（需要 ImageMagick：`brew install imagemagick`）。
 - `scripts/install-icon.sh` — 备份 MarkText 应用图标文件并替换，对应用做 ad-hoc 签名，刷新图标缓存。
+- `scripts/build-release.sh` — 构建带稳定应用标识签名的应用、自动更新 ZIP、`latest-mac.yml`、DMG 与校验文件。
 
 ## 从源码安装
 
