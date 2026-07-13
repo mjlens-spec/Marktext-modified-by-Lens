@@ -302,8 +302,8 @@
     border-bottom: 1px solid var(--lens-line);
     font-family: var(--editor-title-font-family, var(--reading-font-title)), var(--lens-font-wordmark) !important;
     font-size: 2.4em !important;
-    /* Spec H1 weight 600: WenKai strokes are too light at 400 for CJK titles. */
-    font-weight: 600 !important;
+    /* Lens title uses the loaded bold display face and a heavier CJK fallback. */
+    font-weight: 700 !important;
     line-height: 1.2 !important;
   }
 

@@ -19,7 +19,7 @@ The app is ad-hoc signed for local use and is **not Apple notarized**. On first 
 | Theme | Style |
 | --- | --- |
 | **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design typography system. Large titles use Cormorant Garamond with LXGW WenKai as the CJK fallback, smaller headings use Spectral with the same LXGW WenKai fallback, and body copy uses Noto Sans / Noto Sans SC at 17 px with a 1.7 line height. |
-| **Claude-like** | Warm cream paper with a terracotta accent, adapted from the Typora [Claude-like theme](https://github.com/Muyiiiii/Typora_Claude-Like_Theme). Headings use LXGW WenKai / Source Serif 4; body text uses Source Han Sans / Noto Sans SC. |
+| **Claude-like** | Warm cream paper with a terracotta accent, adapted from the Typora [Claude-like theme](https://github.com/Muyiiiii/Typora_Claude-Like_Theme). Headings use Source Serif 4 with LXGW WenKai as the CJK fallback; body text uses Source Han Sans / Noto Sans SC. |
 
 Both themes ship in two forms:
 
@@ -72,6 +72,7 @@ Restart MarkText after installing themes or the icon. Finder and Dock icon cache
 - Body/UI fonts: `Noto Sans`, `Noto Sans SC`, Apple/PingFang fallback
 - Mono: `JetBrains Mono`, `SF Mono`, Menlo fallback
 - Reading roles: wordmark for large titles, display for smaller headings, and sans for body copy. The editor defaults are `Cormorant Garamond`, `Spectral`, and `Noto Sans SC`, with the theme's LXGW WenKai CJK fallback chain. Override the three `--reading-font-*` variables to change them independently.
+- Lens Design editor H1 uses a 700 weight so Latin and LXGW WenKai CJK titles carry the same visual weight.
 
 ## Compatibility
 

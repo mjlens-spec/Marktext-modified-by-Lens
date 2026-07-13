@@ -19,7 +19,7 @@
 | 主题 | 风格 |
 | --- | --- |
 | **Lens Design** | 冷调纸面上的孔雀蓝 / 酒红 / 金色点缀，基于 Lens Design 色彩与排印体系。大标题使用 Cormorant Garamond，中文回退到霞鹜文楷（LXGW WenKai）；小标题使用 Spectral，中文同样回退到霞鹜文楷；正文使用 Noto Sans / Noto Sans SC；正文为 17 px、行高 1.7。 |
-| **Claude-like** | 暖调米白纸面配陶土色强调色，改编自 Typora 的 [Claude-like 主题](https://github.com/Muyiiiii/Typora_Claude-Like_Theme)。标题使用霞鹜文楷 / Source Serif 4，正文使用思源黑体 / Noto Sans SC。 |
+| **Claude-like** | 暖调米白纸面配陶土色强调色，改编自 Typora 的 [Claude-like 主题](https://github.com/Muyiiiii/Typora_Claude-Like_Theme)。标题使用 Source Serif 4，中文回退到霞鹜文楷（LXGW WenKai），正文使用思源黑体 / Noto Sans SC。 |
 
 两套主题各有两种形态：
 
@@ -72,6 +72,7 @@
 - 正文字体：`Noto Sans`、`Noto Sans SC`，回退 Apple/苹方
 - 等宽字体：`JetBrains Mono`、`SF Mono`，回退 Menlo
 - 阅读映射：大标题使用字标字体，小标题使用 display 字体，正文使用无衬线字体；编辑器默认值为 `Cormorant Garamond`、`Spectral`、`Noto Sans SC`，并保留主题自己的霞鹜文楷中文回退链。修改三个 `--reading-font-*` 变量即可独立换字。
+- Lens Design 编辑器 H1 使用 700 粗体，确保英文标题与霞鹜文楷中文标题的视觉重量一致。
 
 ## 兼容性
 
