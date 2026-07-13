@@ -49,7 +49,34 @@ function LISTEN_FOR_BOOTSTRAP_WINDOW() {
 const mainFixture = `
 process.env.MARKTEXT_VERSION = "0.19.1";
 process.env.MARKTEXT_VERSION_STRING = "v0.19.1";
-function checkUpdates(browserWindow) {}
+let runningUpdate = false;
+let win = null;
+electronUpdater.autoUpdater.autoDownload = false;
+electronUpdater.autoUpdater.on("error", (error) => {
+  if (win) {
+    const err = error;
+    win.webContents.send("mt::UPDATE_ERROR", err.message);
+  }
+});
+electronUpdater.autoUpdater.on("update-available", (_info) => {
+  if (win) {
+    win.webContents.send("mt::UPDATE_AVAILABLE", "Found an update");
+  }
+  runningUpdate = false;
+});
+electronUpdater.autoUpdater.on("update-not-available", (_info) => {
+  if (win) {
+    win.webContents.send("mt::UPDATE_NOT_AVAILABLE", "Current version is up-to-date.");
+  }
+  runningUpdate = false;
+});
+const checkUpdates = (browserWindow) => {
+  if (!runningUpdate) {
+    runningUpdate = true;
+    win = browserWindow;
+    electronUpdater.autoUpdater.checkForUpdates();
+  }
+};
 function getBackground(theme) {
   switch (theme) {
       case "dark":
@@ -101,7 +128,9 @@ test('ASAR patch sets the Lens version and schedules one update check after the 
   const packageJson = JSON.parse(fs.readFileSync(path.join(fixtureRoot, 'package.json'), 'utf8'))
   assert.match(main, /Lens automatic update check patch start/)
   assert.match(main, /electron\.app\.once\("browser-window-created"/)
-  assert.match(main, /setTimeout\(\(\) => checkUpdates\(browserWindow\), 15_000\)/)
+  assert.match(main, /setTimeout\(\(\) => checkUpdates\(browserWindow, \{ silent: true \}\), 15_000\)/)
+  assert.match(main, /if \(win && !lensAutomaticUpdateCheck\)/)
+  assert.match(main, /lensAutomaticUpdateCheck = options\.silent === true/)
   assert.equal(main.match(/Lens automatic update check patch start/g)?.length, 1)
   assert.match(main, /process\.env\.MARKTEXT_VERSION = "1\.0\.0"/)
   assert.match(main, /process\.env\.MARKTEXT_VERSION_STRING = "v1\.0\.0"/)
@@ -155,8 +184,12 @@ test('release builder produces a signed app, updater ZIP, DMG, manifest, and che
     'ditto',
     'hdiutil create',
     'codesign --verify',
+    'designated => identifier',
     'app-update.yml',
     'make-update-manifest.mjs',
+    'themes/export',
+    '*.lens-backup-*',
+    '*.lens-*-backup-*',
     'shasum -a 256'
   ]) {
     assert.ok(script.includes(requirement), `release builder must include ${requirement}`)

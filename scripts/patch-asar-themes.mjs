@@ -13,6 +13,11 @@ const extractedRoot = path.resolve(process.argv[2])
 const outRoot = fs.existsSync(path.join(extractedRoot, 'out')) ? path.join(extractedRoot, 'out') : extractedRoot
 const mainPath = path.join(outRoot, 'main', 'index.js')
 const rendererAssets = path.join(outRoot, 'renderer', 'assets')
+const releaseVersion = process.env.LENS_RELEASE_VERSION?.trim()
+
+if (releaseVersion && !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(releaseVersion)) {
+  throw new Error(`Invalid LENS_RELEASE_VERSION: ${releaseVersion}`)
+}
 
 if (!fs.existsSync(mainPath)) {
   throw new Error(`Missing main bundle: ${mainPath}`)
@@ -50,6 +55,17 @@ const replaceMarkedReplacement = (source, start, end, replacement, anchor) => {
     throw new Error(`Missing patch anchor: ${anchor}`)
   }
   return source.replace(anchor, replacement)
+}
+
+const replaceMarkedPattern = (source, start, end, replacement, anchorPattern) => {
+  const marked = new RegExp(`${escapeRegExp(start)}\\n[\\s\\S]*?\\n${escapeRegExp(end)}\\n`, 'm')
+  if (marked.test(source)) {
+    return source.replace(marked, replacement)
+  }
+  if (!anchorPattern.test(source)) {
+    throw new Error(`Missing patch pattern: ${anchorPattern}`)
+  }
+  return source.replace(anchorPattern, replacement)
 }
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -380,6 +396,128 @@ main = replaceMarkedBlock(
 `,
   '    const { _args: args2, _openFilesCache } = this;'
 )
+
+if (main.includes('electronUpdater.autoUpdater.on("update-not-available"') && main.includes('const checkUpdates =')) {
+  main = replaceMarkedBlock(
+    main,
+    '// Lens automatic update state patch start',
+    '// Lens automatic update state patch end',
+    `// Lens automatic update state patch start
+let lensAutomaticUpdateCheck = false;
+// Lens automatic update state patch end
+`,
+    'electronUpdater.autoUpdater.autoDownload = false;'
+  )
+
+  main = replaceMarkedPattern(
+    main,
+    '// Lens automatic update error handler patch start',
+    '// Lens automatic update error handler patch end',
+    `// Lens automatic update error handler patch start
+electronUpdater.autoUpdater.on("error", (error) => {
+  if (win && !lensAutomaticUpdateCheck) {
+    const err = error;
+    win.webContents.send(
+      "mt::UPDATE_ERROR",
+      err === null ? "Error: unknown" : (err.message || err).toString()
+    );
+  }
+  runningUpdate = false;
+  lensAutomaticUpdateCheck = false;
+});
+// Lens automatic update error handler patch end
+`,
+    /electronUpdater\.autoUpdater\.on\("error", \(error\) => \{\n[\s\S]*?\n\}\);/
+  )
+
+  main = replaceMarkedPattern(
+    main,
+    '// Lens automatic update available handler patch start',
+    '// Lens automatic update available handler patch end',
+    `// Lens automatic update available handler patch start
+electronUpdater.autoUpdater.on("update-available", (_info) => {
+  if (win) {
+    win.webContents.send(
+      "mt::UPDATE_AVAILABLE",
+      "Found an update, do you want download and install now?"
+    );
+  }
+  runningUpdate = false;
+  lensAutomaticUpdateCheck = false;
+});
+// Lens automatic update available handler patch end
+`,
+    /electronUpdater\.autoUpdater\.on\("update-available", \(_info\) => \{\n[\s\S]*?\n\}\);/
+  )
+
+  main = replaceMarkedPattern(
+    main,
+    '// Lens automatic update unavailable handler patch start',
+    '// Lens automatic update unavailable handler patch end',
+    `// Lens automatic update unavailable handler patch start
+electronUpdater.autoUpdater.on("update-not-available", (_info) => {
+  if (win && !lensAutomaticUpdateCheck) {
+    win.webContents.send("mt::UPDATE_NOT_AVAILABLE", "Current version is up-to-date.");
+  }
+  runningUpdate = false;
+  lensAutomaticUpdateCheck = false;
+});
+// Lens automatic update unavailable handler patch end
+`,
+    /electronUpdater\.autoUpdater\.on\("update-not-available", \(_info\) => \{\n[\s\S]*?\n\}\);/
+  )
+
+  main = replaceMarkedPattern(
+    main,
+    '// Lens automatic update request patch start',
+    '// Lens automatic update request patch end',
+    `// Lens automatic update request patch start
+const checkUpdates = (browserWindow, options = {}) => {
+  if (!runningUpdate) {
+    runningUpdate = true;
+    win = browserWindow;
+    lensAutomaticUpdateCheck = options.silent === true;
+    electronUpdater.autoUpdater.checkForUpdates();
+  }
+};
+// Lens automatic update request patch end
+`,
+    /const checkUpdates = \(browserWindow\) => \{\n[\s\S]*?\n\};/
+  )
+}
+
+if (main.includes('const checkUpdates =') && main.includes('const appController = new App(accessor, args);')) {
+  main = replaceMarkedBlock(
+    main,
+    '// Lens automatic update check patch start',
+    '// Lens automatic update check patch end',
+    `// Lens automatic update check patch start
+electron.app.once("browser-window-created", (_event, browserWindow) => {
+  setTimeout(() => checkUpdates(browserWindow, { silent: true }), 15_000);
+});
+// Lens automatic update check patch end
+`,
+    'const appController = new App(accessor, args);'
+  )
+}
+
+if (releaseVersion) {
+  const versionPattern = /process\.env\.MARKTEXT_VERSION = "[^"]+";/
+  const versionStringPattern = /process\.env\.MARKTEXT_VERSION_STRING = "[^"]+";/
+  if (!versionPattern.test(main) || !versionStringPattern.test(main)) {
+    throw new Error('Cannot find MarkText version constants in the main bundle')
+  }
+  main = main.replace(versionPattern, `process.env.MARKTEXT_VERSION = "${releaseVersion}";`)
+  main = main.replace(versionStringPattern, `process.env.MARKTEXT_VERSION_STRING = "v${releaseVersion}";`)
+
+  const packagePath = path.join(extractedRoot, 'package.json')
+  if (!fs.existsSync(packagePath)) {
+    throw new Error(`Missing ASAR package metadata: ${packagePath}`)
+  }
+  const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
+  packageJson.version = releaseVersion
+  fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+}
 
 fs.writeFileSync(mainPath, main)
 
