@@ -20,10 +20,16 @@
   --claude-accent-dark: #9c5530;
   --claude-code-text: #7c4a35;
   --claude-code-bg: #f4f2ee;
-  --claude-font-heading: "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Source Serif 4", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-font-cjk: "LXGW WenKai", "霞鹜文楷", "霞鹭文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", serif;
+  --claude-font-title: "Source Serif 4", var(--claude-font-cjk);
+  --claude-font-heading: "Source Serif 4", var(--claude-font-cjk);
   --claude-font-reading: "Source Han Sans SC", "Source Han Sans CN", "Source Han Sans", "思源黑体", "思源黑体 CN", "Noto Sans CJK SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "IBM Plex Sans", sans-serif;
   --claude-font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
   --claude-font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
+  --reading-font-title: var(--claude-font-title);
+  --reading-font-heading: var(--claude-font-heading);
+  --reading-font-body: var(--claude-font-reading);
+  --reading-font-quote: var(--claude-font-reading);
 }
 
 html,
@@ -36,7 +42,7 @@ body {
 .markdown-body {
   max-width: 820px;
   color: var(--claude-text);
-  font-family: var(--claude-font-reading);
+  font-family: var(--reading-font-body);
   font-size: 16px;
   line-height: 1.78;
   -webkit-font-smoothing: antialiased;
@@ -70,7 +76,7 @@ body {
 .markdown-body h5,
 .markdown-body h6 {
   color: var(--claude-heading);
-  font-family: var(--claude-font-heading);
+  font-family: var(--reading-font-heading);
   letter-spacing: 0;
 }
 
@@ -79,6 +85,7 @@ body {
   margin-bottom: 0.82em;
   padding-bottom: 0.35em;
   border-bottom: 1px solid var(--claude-line);
+  font-family: var(--reading-font-title);
   font-size: 2.1em;
   font-weight: 700;
   line-height: 1.18;
@@ -102,7 +109,7 @@ body {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  font-family: var(--claude-font-heading);
+  font-family: var(--reading-font-heading);
   font-size: 1em;
   font-weight: 650;
   color: var(--claude-text-muted);
@@ -113,7 +120,7 @@ body {
 .markdown-body td,
 .markdown-body th {
   color: var(--claude-text);
-  font-family: var(--claude-font-reading);
+  font-family: var(--reading-font-body);
   line-height: 1.78;
 }
 
@@ -139,7 +146,7 @@ body {
   border-radius: 0 6px 6px 0;
   background: var(--claude-surface-muted);
   color: var(--claude-text-muted);
-  font-family: var(--claude-font-reading);
+  font-family: var(--reading-font-quote);
   line-height: 1.72;
 }
 

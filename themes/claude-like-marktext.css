@@ -22,10 +22,16 @@
   --claude-code-bg: #f4f2ee;
   --claude-selection: rgba(188, 106, 58, 0.2);
   --claude-shadow: 0 1px 0 rgba(43, 38, 33, 0.04), 0 8px 22px -18px rgba(43, 38, 33, 0.36);
-  --claude-font-heading: "LXGW WenKai", "霞鹜文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Source Serif 4", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --claude-font-cjk: "LXGW WenKai", "霞鹜文楷", "霞鹭文楷", "LXGW WenKai Screen", "霞鹜文楷屏幕阅读版", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", serif;
+  --claude-font-title: "Source Serif 4", var(--claude-font-cjk);
+  --claude-font-heading: "Source Serif 4", var(--claude-font-cjk);
   --claude-font-reading: "Source Han Sans SC", "Source Han Sans CN", "Source Han Sans", "思源黑体", "思源黑体 CN", "Noto Sans CJK SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "IBM Plex Sans", sans-serif;
   --claude-font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
   --claude-font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
+  --reading-font-title: var(--claude-font-title);
+  --reading-font-heading: var(--claude-font-heading);
+  --reading-font-body: var(--claude-font-reading);
+  --reading-font-quote: var(--claude-font-reading);
 
   --themeColor: rgb(188, 106, 58);
   --themeColor90: rgba(188, 106, 58, 0.9);
@@ -154,14 +160,14 @@
   .ag-container,
   .mu-container {
     max-width: var(--editor-area-width) !important;
-    font-family: var(--claude-font-reading) !important;
+    font-family: var(--editor-body-font-family, var(--reading-font-body)), var(--claude-font-reading) !important;
     font-size: 16px !important;
     line-height: 1.78 !important;
     color: var(--claude-text) !important;
     letter-spacing: 0 !important;
   }
 
-  .ag-paragraph,
+  p.ag-paragraph,
   .ag-list-item,
   .ag-table td,
   .ag-table th,
@@ -169,12 +175,17 @@
   .mu-container li,
   .mu-container td,
   .mu-container th {
-    font-family: var(--claude-font-reading) !important;
+    font-family: var(--editor-body-font-family, var(--reading-font-body)), var(--claude-font-reading) !important;
     color: var(--claude-text) !important;
     line-height: 1.78 !important;
   }
 
-  .ag-heading,
+  h1.ag-paragraph,
+  h2.ag-paragraph,
+  h3.ag-paragraph,
+  h4.ag-paragraph,
+  h5.ag-paragraph,
+  h6.ag-paragraph,
   .mu-container h1,
   .mu-container h2,
   .mu-container h3,
@@ -182,44 +193,52 @@
   .mu-container h5,
   .mu-container h6 {
     color: var(--claude-heading) !important;
-    font-family: var(--claude-font-heading) !important;
     letter-spacing: 0 !important;
   }
 
+  h1.ag-paragraph,
   .ag-heading-1,
   .mu-container h1 {
     margin-top: 2.25em !important;
     margin-bottom: 0.82em !important;
     padding-bottom: 0.35em !important;
     border-bottom: 1px solid var(--claude-line) !important;
+    font-family: var(--editor-title-font-family, var(--reading-font-title)), var(--claude-font-title) !important;
     font-size: 2.1em !important;
     font-weight: 700 !important;
     line-height: 1.18 !important;
   }
 
+  h2.ag-paragraph,
   .ag-heading-2,
   .mu-container h2 {
     margin-top: 2em !important;
     margin-bottom: 0.65em !important;
+    font-family: var(--editor-heading-font-family, var(--reading-font-heading)), var(--claude-font-heading) !important;
     font-size: 1.58em !important;
     font-weight: 700 !important;
     line-height: 1.25 !important;
   }
 
+  h3.ag-paragraph,
   .ag-heading-3,
   .mu-container h3 {
     margin-top: 1.75em !important;
+    font-family: var(--editor-heading-font-family, var(--reading-font-heading)), var(--claude-font-heading) !important;
     font-size: 1.28em !important;
     font-weight: 650 !important;
   }
 
+  h4.ag-paragraph,
+  h5.ag-paragraph,
+  h6.ag-paragraph,
   .ag-heading-4,
   .ag-heading-5,
   .ag-heading-6,
   .mu-container h4,
   .mu-container h5,
   .mu-container h6 {
-    font-family: var(--claude-font-heading) !important;
+    font-family: var(--editor-heading-font-family, var(--reading-font-heading)), var(--claude-font-heading) !important;
     font-size: 1em !important;
     font-weight: 650 !important;
     color: var(--claude-text-muted) !important;
@@ -251,7 +270,7 @@
     border-radius: 0 6px 6px 0 !important;
     background: var(--claude-surface-muted) !important;
     color: var(--claude-text-muted) !important;
-    font-family: var(--claude-font-reading) !important;
+    font-family: var(--reading-font-quote), var(--claude-font-reading) !important;
     line-height: 1.72 !important;
   }
 
