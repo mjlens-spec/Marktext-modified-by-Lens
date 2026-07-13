@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SRC="${1:-"$ROOT/icon/lens-marktext-icon.svg"}"
+DEFAULT_SRC="$ROOT/icon/lens-marktext-pu-v1-alpha.png"
+SRC="${1:-"$DEFAULT_SRC"}"
 OUT="$ROOT/icon/build"
 ICONSET="$OUT/LensMarkText.iconset"
 
@@ -16,7 +17,12 @@ fi
 render_png() {
   local size="$1"
   local name="$2"
-  magick -background none "$SRC" -resize "${size}x${size}" -depth 8 "PNG32:$ICONSET/$name"
+  magick -background none "$SRC" \
+    -resize "${size}x${size}" \
+    -depth 8 \
+    -strip \
+    -define png:exclude-chunks=date,time \
+    "PNG32:$ICONSET/$name"
 }
 
 render_png 16 "icon_16x16.png"

@@ -4,7 +4,7 @@
 
 <img src="icon/lens-marktext-icon.png" alt="Lens MarkText 图标" width="128" align="right" />
 
-针对 macOS 上 [MarkText](https://github.com/marktext/marktext) 的 Lens 风格定制包：两套内置编辑器主题、配套的 HTML/PDF 导出主题，以及一枚「浅色纸张 + 手写线条」风格的替换版应用图标。
+针对 macOS 上 [MarkText](https://github.com/marktext/marktext) 的 Lens 风格定制包：两套内置编辑器主题、配套的 HTML/PDF 导出主题，以及一枚以书法「攵」反文旁为主体、使用暖白纸底的替换版应用图标。
 
 本项目面向本地已安装的 MarkText `0.19.1`。源码仓库不包含、也不再分发 MarkText 二进制文件或 `app.asar` —— 预构建的 DMG 见[下载](#下载)。
 
@@ -31,7 +31,7 @@
 ## 仓库结构
 
 - `themes/` — 编辑器与导出 CSS 主题。
-- `icon/` — 应用图标的源文件与成品：`lens-marktext-icon.png`（1024 px）、`lens-marktext-icon.icns`、浅色纸张风格源图，以及留作参考的早期草稿。
+- `icon/` — 应用图标的源文件与成品：`lens-marktext-pu-v1-source.png`（原始生成稿）、`lens-marktext-pu-v1-alpha.png`（带透明圆角的生产源文件）、`lens-marktext-icon.png`（1024 px）、`lens-marktext-icon.icns`、1.0 生产规范，以及留作参考的早期草稿。
 - `scripts/install-builtin-themes.sh` — 备份 `app.asar`，注入内置主题条目，重新打包并对 MarkText 做 ad-hoc 签名。
 - `scripts/install-theme.sh` — 备份 `preferences.json`，安装导出主题，清空 Custom CSS，并选中 `lens-design`。
 - `scripts/build-icon.sh` — 从 PNG 源图构建 `.icns`（需要 ImageMagick：`brew install imagemagick`）。
@@ -54,9 +54,11 @@
 构建并安装图标：
 
 ```bash
-./scripts/build-icon.sh icon/lens-marktext-light-paper-final-alpha.png
+./scripts/build-icon.sh
 ./scripts/install-icon.sh
 ```
+
+默认图标源文件已切换为 1.0 版书法「攵」资产。需要构建其他图标时，可以向 `build-icon.sh` 传入另一张 PNG 或 SVG，不影响默认版本。
 
 安装主题或图标后请重启 MarkText。访达与程序坞的图标缓存可能滞后；如果仍显示旧图标，退出并重新启动一次 MarkText 即可。
 
