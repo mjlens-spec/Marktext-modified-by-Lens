@@ -31,7 +31,7 @@ const schema = {
   language,
   editorFontFamily,
   fontSize,
-  lineHeight
+  lineHeight,
 };
 function RESTORE_BUFFERED_STATE(state) {
   const layout2 = createBufferedLayoutState(state);
@@ -77,12 +77,15 @@ function preferencesSetup() {
       fontSize: fontSize2,
       editorFontFamily: editorFontFamily2,
       lineHeight: lineHeight2,
+      autoPairBracket: autoPairBracket2,
     } = storeToRefs(preferenceStore);
-    return createVNode(_sfc_main$m, {
+    return [
+            createVNode(_sfc_main$m, {
               description: unref(t2)("preferences.editor.textEditor.fontFamily"),
               value: unref(editorFontFamily2),
               "on-change": (value) => onSelectChange("editorFontFamily", value)
-            }, null, 8, ["description", "value", "on-change"]);
+            }, null, 8, ["description", "value", "on-change"]),
+    ];
 }
 `
 
@@ -93,7 +96,7 @@ const schema = {
   language,
   editorFontFamily,
   fontSize,
-  lineHeight
+  lineHeight,
 };
 function getBackground(theme) {
   switch (theme) {
@@ -160,9 +163,14 @@ test('ASAR patch adds independent title, heading, and body font preferences to M
 test('Lens Design reads runtime font roles instead of relying on one inherited editor font', () => {
   const css = fs.readFileSync(path.join(root, 'themes', 'lens-design-marktext.css'), 'utf8')
 
-  assert.match(css, /h1[^{}]*\{[^{}]*font-family:\s*var\(--editor-title-font-family,\s*var\(--reading-font-title\)\)/s)
-  assert.match(css, /h2[^{}]*\{[^{}]*font-family:\s*var\(--editor-heading-font-family,\s*var\(--reading-font-heading\)\)/s)
-  assert.match(css, /(?:p|paragraph)[^{}]*\{[^{}]*font-family:\s*var\(--editor-body-font-family,\s*var\(--reading-font-body\)\)/s)
+  assert.match(css, /h1\.ag-paragraph[^{}]*\{[^{}]*font-family:\s*var\(--editor-title-font-family,\s*var\(--reading-font-title\)\)/s)
+  assert.match(css, /h2\.ag-paragraph[^{}]*\{[^{}]*font-family:\s*var\(--editor-heading-font-family,\s*var\(--reading-font-heading\)\)/s)
+  assert.match(css, /p\.ag-paragraph[^{}]*\{[^{}]*font-family:\s*var\(--editor-body-font-family,\s*var\(--reading-font-body\)\)/s)
+  assert.doesNotMatch(
+    css,
+    /(?:^|\n)\s*\.ag-paragraph\s*,[^{}]*\{[^{}]*font-family:\s*var\(--editor-body-font-family/s,
+    'the body rule must not flatten Muya heading elements, which also carry ag-paragraph'
+  )
 })
 
 test('theme installer persists distinct Chinese-safe defaults for every reading role', (t) => {
@@ -178,9 +186,24 @@ test('theme installer persists distinct Chinese-safe defaults for every reading 
   })
 
   const prefs = JSON.parse(fs.readFileSync(path.join(appSupport, 'preferences.json'), 'utf8'))
-  assert.equal(prefs.editorTitleFontFamily, 'Kaiti SC')
-  assert.equal(prefs.editorHeadingFontFamily, 'Songti SC')
-  assert.equal(prefs.editorBodyFontFamily, 'PingFang SC')
+  assert.equal(prefs.editorTitleFontFamily, 'Cormorant Garamond')
+  assert.equal(prefs.editorHeadingFontFamily, 'Spectral')
+  assert.equal(prefs.editorBodyFontFamily, 'Noto Sans SC')
   assert.notEqual(prefs.editorTitleFontFamily, prefs.editorHeadingFontFamily)
   assert.notEqual(prefs.editorHeadingFontFamily, prefs.editorBodyFontFamily)
+})
+
+test('runtime font variables keep the Lens Design CJK fallback stack available', (t) => {
+  const { fixtureRoot, rendererDir } = makeBundleFixture(t)
+
+  execFileSync(process.execPath, [path.join(root, 'scripts', 'patch-asar-themes.mjs'), fixtureRoot])
+
+  const renderer = fs.readFileSync(path.join(rendererDir, 'index.js'), 'utf8')
+
+  assert.match(renderer, /const editorTitleFontFamily = .*default": "Cormorant Garamond"/)
+  assert.match(renderer, /const editorHeadingFontFamily = .*default": "Spectral"/)
+  assert.match(renderer, /const editorBodyFontFamily = .*default": "Noto Sans SC"/)
+  assert.match(renderer, /"--editor-title-font-family": unref\(editorTitleFontFamily2\) \? `\$\{unref\(editorTitleFontFamily2\)\}` : `var\(--reading-font-title\)`/)
+  assert.match(renderer, /"--editor-heading-font-family": unref\(editorHeadingFontFamily2\) \? `\$\{unref\(editorHeadingFontFamily2\)\}` : `var\(--reading-font-heading\)`/)
+  assert.match(renderer, /"--editor-body-font-family": unref\(editorBodyFontFamily2\) \? `\$\{unref\(editorBodyFontFamily2\)\}` : `var\(--reading-font-body\)`/)
 })

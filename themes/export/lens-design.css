@@ -51,10 +51,11 @@
   /* CJK readability: body ink one step deeper than ink-500 for dense hanzi strokes. */
   --lens-text-body: var(--ink-700);
   --lens-ink: var(--ink-900);
-  --lens-font-sans: "Noto Sans", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-  --lens-font-serif: "Spectral", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
-  --lens-font-display: "Spectral", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
-  --lens-font-wordmark: "Cormorant Garamond", "LXGW WenKai", "Noto Serif SC", Georgia, serif;
+  --lens-font-cjk: "LXGW WenKai", "霞鹜文楷", "霞鹭文楷", "Noto Serif SC", "Songti SC", serif;
+  --lens-font-sans: "Noto Sans", "Noto Sans SC", "Noto Sans CJK SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --lens-font-serif: "Spectral", var(--lens-font-cjk);
+  --lens-font-display: "Spectral", var(--lens-font-cjk);
+  --lens-font-wordmark: "Cormorant Garamond", var(--lens-font-cjk);
   --lens-font-mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   /* Reading typography roles. Override these three slots to tune a theme's hierarchy. */
   --reading-font-title: var(--lens-font-wordmark);

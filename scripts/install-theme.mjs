@@ -33,6 +33,10 @@ prefs = {
   lightModeTheme: 'lens-design',
   sideBarVisibility: true,
   editorFontFamily: 'Noto Sans SC',
+  // Lens Design editorial stack: Latin display faces fall back to LXGW WenKai for CJK.
+  editorTitleFontFamily: 'Cormorant Garamond',
+  editorHeadingFontFamily: 'Spectral',
+  editorBodyFontFamily: 'Noto Sans SC',
   fontSize: 16,
   lineHeight: 1.7,
   editorLineWidth: '78ch',

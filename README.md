@@ -18,7 +18,7 @@ The app is ad-hoc signed for local use and is **not Apple notarized**. On first 
 
 | Theme | Style |
 | --- | --- |
-| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design typography system. Large titles use Cormorant Garamond / LXGW WenKai, smaller headings use Spectral / LXGW WenKai, and body copy uses Noto Sans / Noto Sans SC at 17 px with a 1.7 line height. |
+| **Lens Design** | Peacock blue / wine / gold accents on a cool paper background, built on the Lens Design typography system. Large titles use Cormorant Garamond with LXGW WenKai as the CJK fallback, smaller headings use Spectral with the same LXGW WenKai fallback, and body copy uses Noto Sans / Noto Sans SC at 17 px with a 1.7 line height. |
 | **Claude-like** | Warm cream paper with a terracotta accent, adapted from the Typora [Claude-like theme](https://github.com/Muyiiiii/Typora_Claude-Like_Theme). Headings use LXGW WenKai / Source Serif 4; body text uses Source Han Sans / Noto Sans SC. |
 
 Both themes ship in two forms:
@@ -67,11 +67,11 @@ Restart MarkText after installing themes or the icon. Finder and Dock icon cache
 - Gold: `#B0883E`
 - Paper: `#F4F6F8`
 - Text: `#15181C`
+- CJK editorial font: `LXGW WenKai` (霞鹜文楷), with `Noto Serif SC` and `Songti SC` fallbacks
+- Title font: `Cormorant Garamond`; heading font: `Spectral`; both fall back to LXGW WenKai for CJK glyphs
 - Body/UI fonts: `Noto Sans`, `Noto Sans SC`, Apple/PingFang fallback
-- Editorial fonts: `Spectral`, `LXGW WenKai`, `Noto Serif SC`, Georgia fallback
-- Wordmark font: `Cormorant Garamond`
 - Mono: `JetBrains Mono`, `SF Mono`, Menlo fallback
-- Reading roles: wordmark for large titles, display for smaller headings, and sans for body copy; override the three `--reading-font-*` variables to change them independently.
+- Reading roles: wordmark for large titles, display for smaller headings, and sans for body copy. The editor defaults are `Cormorant Garamond`, `Spectral`, and `Noto Sans SC`, with the theme's LXGW WenKai CJK fallback chain. Override the three `--reading-font-*` variables to change them independently.
 
 ## Compatibility
 
