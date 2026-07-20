@@ -419,27 +419,74 @@
   }
 
   .ag-table,
+  #ag-editor-id table,
   .mu-container table {
+    display: table;
+    width: 100% !important;
+    min-width: 100%;
+    max-width: none;
+    table-layout: auto;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
     border-collapse: collapse !important;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid var(--lens-line) !important;
     border-radius: var(--lens-radius-md);
     box-shadow: var(--lens-shadow-1);
   }
 
   .ag-table th,
+  #ag-editor-id table th,
   .mu-container table th {
     background: var(--lens-sunken) !important;
     color: var(--lens-blue-ink) !important;
     font-family: var(--lens-font-sans) !important;
     font-weight: 600;
+    line-height: 1.45 !important;
+    white-space: normal;
   }
 
   .ag-table td,
   .ag-table th,
+  #ag-editor-id table td,
+  #ag-editor-id table th,
   .mu-container table td,
   .mu-container table th {
+    box-sizing: border-box;
+    min-width: 4.5em;
+    font-size: inherit !important;
     border-color: var(--lens-line) !important;
+    vertical-align: top;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .ag-table td *,
+  .ag-table th *,
+  #ag-editor-id table td *,
+  #ag-editor-id table th *,
+  .mu-container table td *,
+  .mu-container table th * {
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  .ag-table td:first-child,
+  .ag-table th:first-child,
+  #ag-editor-id table td:first-child,
+  #ag-editor-id table th:first-child,
+  .mu-container table td:first-child,
+  .mu-container table th:first-child {
+    min-width: 3.25em;
+  }
+
+  .ag-table td:last-child,
+  .ag-table th:last-child,
+  #ag-editor-id table td:last-child,
+  #ag-editor-id table th:last-child,
+  .mu-container table td:last-child,
+  .mu-container table th:last-child {
+    min-width: 8.5em;
   }
 
   .ag-mark,

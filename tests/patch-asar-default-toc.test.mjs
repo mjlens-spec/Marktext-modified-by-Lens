@@ -44,6 +44,9 @@ function LISTEN_FOR_BOOTSTRAP_WINDOW() {
           showTabBar: !!tabBarVisibility2
         });
 }
+// Reversion semantic minimap runtime patch start
+setInterval(() => reversionSemanticMinimap.start(), 1500);
+// Reversion semantic minimap runtime patch end
 `
 
 const mainFixture = `
@@ -65,6 +68,9 @@ function activate() {
 function ready() {
     const { _args: args2, _openFilesCache } = this;
 }
+  // Reversion Git diff bridge patch start
+  electron.ipcMain.handle("reversion::git-diff-summary", () => ({}));
+  // Reversion Git diff bridge patch end
 `
 
 test('ASAR patch opens the document TOC and sidebar for every startup path', (t) => {
@@ -87,6 +93,8 @@ test('ASAR patch opens the document TOC and sidebar for every startup path', (t)
   assert.match(renderer, /Lens Design bootstrap TOC state patch start/)
   assert.doesNotMatch(renderer, /rightColumn:\s*layout2\.rightColumn/)
   assert.doesNotMatch(renderer, /showSideBar:\s*!!sideBarVisibility2/)
+  assert.doesNotMatch(renderer, /reversionSemanticMinimap|setInterval/)
+  assert.doesNotMatch(fs.readFileSync(path.join(mainDir, 'index.js'), 'utf8'), /reversion::git-diff-summary/)
 
   execFileSync(process.execPath, [path.join(root, 'scripts', 'patch-asar-themes.mjs'), fixtureRoot])
   assert.equal(

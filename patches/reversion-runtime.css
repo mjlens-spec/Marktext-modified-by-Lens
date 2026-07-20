@@ -1,0 +1,29 @@
+/* Reversion inline live rendering patch start */
+#ag-editor-id .ag-hide,
+#ag-editor-id .ag-hide .ag-highlight,
+#ag-editor-id .ag-hide .ag-selection {
+  display: inline-block !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  vertical-align: middle;
+}
+
+#ag-editor-id .ag-active .ag-gray,
+#ag-editor-id .ag-active .ag-remove:not(.ag-hide) {
+  opacity: 0.72;
+  transition: color 100ms ease, opacity 100ms ease;
+}
+
+#ag-editor-id .ag-active .ag-inline-rule,
+#ag-editor-id .ag-active .ag-inline-code,
+#ag-editor-id .ag-active .ag-math-render {
+  transition: color 100ms ease, background-color 100ms ease;
+}
+
+#ag-editor-id .ag-paragraph:not(.ag-active) .ag-inline-rule {
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.16em;
+}
+/* Reversion inline live rendering patch end */

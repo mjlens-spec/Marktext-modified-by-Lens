@@ -2,14 +2,18 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-APP="${1:-/Applications/MarkText.app}"
+DEFAULT_APP="/Applications/Reversion.app"
+if [[ ! -d "$DEFAULT_APP" && -d "/Applications/MarkText.app" ]]; then
+  DEFAULT_APP="/Applications/MarkText.app"
+fi
+APP="${1:-$DEFAULT_APP}"
 ICON="$ROOT/icon/lens-marktext-icon.icns"
 PNG="$ROOT/icon/lens-marktext-icon.png"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP_DIR="${LENS_BACKUP_DIR:-$HOME/Library/Application Support/marktext/lens-backups/icons-$STAMP}"
 
 if [[ ! -d "$APP" ]]; then
-  echo "MarkText app not found: $APP" >&2
+  echo "Reversion/MarkText app not found: $APP" >&2
   exit 1
 fi
 
@@ -51,4 +55,4 @@ fi
 
 echo "Installed icon into $APP"
 echo "Backups: $BACKUP_DIR"
-echo "A Finder/Dock cache refresh or MarkText restart may be needed before the new icon appears."
+echo "A Finder/Dock cache refresh or Reversion restart may be needed before the new icon appears."

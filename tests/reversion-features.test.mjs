@@ -1,0 +1,107 @@
+import assert from 'node:assert/strict'
+import fs from 'node:fs'
+import path from 'node:path'
+import test from 'node:test'
+import { fileURLToPath } from 'node:url'
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8')
+
+test('inline live rendering preserves Muya hidden markers and active syntax feedback', () => {
+  const css = read('patches/reversion-runtime.css')
+  const installer = read('scripts/install-theme.mjs')
+  const patcher = read('scripts/patch-asar-themes.mjs')
+
+  assert.match(css, /#ag-editor-id \.ag-hide[\s\S]*width: 0 !important/s)
+  assert.match(css, /#ag-editor-id \.ag-active \.ag-gray/)
+  assert.match(css, /#ag-editor-id \.ag-active \.ag-inline-rule/)
+  assert.match(installer, /sourceCodeModeEnabled: false/)
+  assert.match(installer, /autoPairMarkdownSyntax: true/)
+  assert.match(patcher, /const reversionRuntimeCss = fs\.readFileSync/)
+  assert.match(patcher, /replaceMarkedAppend\([\s\S]*Reversion runtime styles patch start/)
+})
+
+test('semantic minimap and its background Git work are removed', () => {
+  const patcher = read('scripts/patch-asar-themes.mjs')
+  const css = read('patches/reversion-runtime.css')
+
+  assert.equal(fs.existsSync(path.join(root, 'patches/reversion-renderer-runtime.js')), false)
+  assert.equal(fs.existsSync(path.join(root, 'patches/reversion-main-runtime.js')), false)
+  assert.doesNotMatch(css, /reversion-(?:semantic-)?minimap/)
+  assert.doesNotMatch(patcher, /reversion::git-diff-summary/)
+  assert.doesNotMatch(patcher, /setInterval\(|MutationObserver/)
+  assert.match(patcher, /removeMarkedBlock\([\s\S]*Reversion semantic minimap runtime patch start/)
+  assert.match(patcher, /removeMarkedBlock\([\s\S]*Reversion Git diff bridge patch start/)
+})
+
+test('editor and export themes balance narrow and wide tables', () => {
+  for (const themePath of ['themes/lens-design-marktext.css', 'themes/claude-like-marktext.css']) {
+    const css = read(themePath)
+    assert.match(css, /#ag-editor-id table,[\s\S]*width: 100% !important;[\s\S]*table-layout: auto;[\s\S]*font-size: 13px !important;/)
+    assert.match(css, /#ag-editor-id table th,[\s\S]*line-height: 1\.45 !important;[\s\S]*white-space: normal;/)
+    assert.match(css, /#ag-editor-id table th,[\s\S]*min-width: 4\.5em;/)
+    assert.match(css, /#ag-editor-id table th:first-child,[\s\S]*min-width: 3\.25em;/)
+    assert.match(css, /#ag-editor-id table th:last-child,[\s\S]*min-width: 8\.5em;/)
+    assert.match(css, /#ag-editor-id table td \*,[\s\S]*font-size: inherit !important;[\s\S]*line-height: inherit !important;/)
+  }
+
+  for (const themePath of ['themes/export/lens-design.css', 'themes/export/claude-like.css']) {
+    const css = read(themePath)
+    assert.match(css, /\.markdown-body table \{[\s\S]*width: 100%;[\s\S]*table-layout: auto;[\s\S]*font-size: 13px;/)
+    assert.match(css, /\.markdown-body table th \{[\s\S]*line-height: 1\.45;[\s\S]*white-space: normal;/)
+    assert.match(css, /\.markdown-body table td \*,[\s\S]*font-size: inherit !important;[\s\S]*line-height: inherit !important;/)
+    assert.match(css, /@media print[\s\S]*\.markdown-body table th \{[\s\S]*white-space: normal;/)
+  }
+})
+
+test('Reversion branding is localized and applied to app and ASAR metadata', () => {
+  const brandScript = read('scripts/brand-app.sh')
+  const patcher = read('scripts/patch-asar-themes.mjs')
+  const english = read('config/InfoPlist.en.strings')
+  const simplifiedChinese = read('config/InfoPlist.zh-Hans.strings')
+  const traditionalChinese = read('config/InfoPlist.zh-Hant.strings')
+
+  assert.match(brandScript, /CFBundleDisplayName Reversion/)
+  assert.match(brandScript, /CFBundleName marktext/)
+  assert.match(brandScript, /UTImportedTypeDeclarations/)
+  assert.match(brandScript, /net\.daringfireball\.markdown/)
+  assert.match(brandScript, /LSItemContentTypes/)
+  assert.match(english, /"CFBundleDisplayName" = "Reversion"/)
+  assert.match(simplifiedChinese, /"CFBundleDisplayName" = "反文"/)
+  assert.match(traditionalChinese, /"CFBundleDisplayName" = "反文"/)
+  assert.doesNotMatch(english, /CFBundleName/)
+  assert.match(patcher, /electron\.app\.setName\("Reversion"\)/)
+  assert.match(patcher, /electron\.app\.setPath\("userData", reversionLegacyUserDataPath\)/)
+  assert.match(patcher, /getPath\("appData"\), "marktext"/)
+  assert.match(patcher, /const name = "Reversion · 反文"/)
+  assert.match(patcher, /packageJson\.name = 'reversion'/)
+  assert.match(patcher, /<title>Reversion<\/title>/)
+  assert.match(patcher, /rendererLogoName/)
+  assert.match(patcher, /lens-marktext-icon\.png/)
+})
+
+test('Finder Quick Look is a bundled macOS preview extension for Markdown', () => {
+  const project = read('quicklook/project.yml')
+  const plist = read('quicklook/Info.plist')
+  const controller = read('quicklook/Sources/PreviewViewController.swift')
+  const renderer = read('quicklook/Sources/ReversionMarkdownRenderer.swift')
+  const entitlements = read('quicklook/ReversionQuickLook.entitlements')
+  const builder = read('scripts/build-quicklook.sh')
+  const releaseBuilder = read('scripts/build-release.sh')
+
+  assert.match(project, /type: app-extension/)
+  assert.match(plist, /com\.apple\.quicklook\.preview/)
+  assert.match(plist, /<key>NSExtensionAttributes<\/key>[\s\S]*<key>QLSupportedContentTypes<\/key>[\s\S]*net\.daringfireball\.markdown/)
+  assert.match(plist, /<key>QLIsDataBasedPreview<\/key>\s*<false\/>/)
+  assert.match(controller, /QLPreviewingController/)
+  assert.doesNotMatch(controller, /@objc\(PreviewViewController\)/)
+  assert.match(controller, /preparePreviewOfFile\(at url: URL/)
+  assert.match(renderer, /AttributedString\(markdown:/)
+  assert.match(entitlements, /com\.apple\.security\.app-sandbox/)
+  assert.match(entitlements, /com\.apple\.security\.files\.user-selected\.read-only/)
+  assert.match(builder, /xcodebuild/)
+  assert.match(builder, /ReversionQuickLook\.appex/)
+  assert.match(releaseBuilder, /APP_NAME="Reversion\.app"/)
+  assert.match(releaseBuilder, /build-quicklook\.sh/)
+  assert.match(releaseBuilder, /codesign --force --deep --sign - "\$STAGED_APP"[\s\S]*codesign --force --sign - --requirements .*reversion-quicklook.*--entitlements .*ReversionQuickLook\.entitlements.*ReversionQuickLook\.appex/)
+})

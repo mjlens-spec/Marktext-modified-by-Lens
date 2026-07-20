@@ -15,7 +15,7 @@ const exportThemes = [
 const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, '')
 
 if (!fs.existsSync(prefsPath)) {
-  throw new Error(`Missing MarkText preferences: ${prefsPath}`)
+  throw new Error(`Missing Reversion/MarkText preferences: ${prefsPath}`)
 }
 
 let prefs = JSON.parse(fs.readFileSync(prefsPath, 'utf8'))
@@ -31,6 +31,10 @@ prefs = {
   theme: 'lens-design',
   followSystemTheme: false,
   lightModeTheme: 'lens-design',
+  sourceCodeModeEnabled: false,
+  autoPairBracket: true,
+  autoPairMarkdownSyntax: true,
+  autoPairQuote: true,
   sideBarVisibility: true,
   editorFontFamily: 'Noto Sans SC',
   // Lens Design editorial stack: Latin display faces fall back to LXGW WenKai for CJK.

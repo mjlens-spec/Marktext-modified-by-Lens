@@ -13,6 +13,7 @@ const extractedRoot = path.resolve(process.argv[2])
 const outRoot = fs.existsSync(path.join(extractedRoot, 'out')) ? path.join(extractedRoot, 'out') : extractedRoot
 const mainPath = path.join(outRoot, 'main', 'index.js')
 const rendererAssets = path.join(outRoot, 'renderer', 'assets')
+const rendererIndexPath = path.join(outRoot, 'renderer', 'index.html')
 const releaseVersion = process.env.LENS_RELEASE_VERSION?.trim()
 
 if (releaseVersion && !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(releaseVersion)) {
@@ -34,6 +35,7 @@ if (!rendererPath) {
 
 const lensCss = fs.readFileSync(path.join(root, 'themes', 'lens-design-marktext.css'), 'utf8')
 const claudeCss = fs.readFileSync(path.join(root, 'themes', 'claude-like-marktext.css'), 'utf8')
+const reversionRuntimeCss = fs.readFileSync(path.join(root, 'patches', 'reversion-runtime.css'), 'utf8')
 
 const replaceMarkedBlock = (source, start, end, replacement, anchor) => {
   const marked = new RegExp(`${escapeRegExp(start)}\\n[\\s\\S]*?\\n${escapeRegExp(end)}\\n`, 'm')
@@ -68,9 +70,27 @@ const replaceMarkedPattern = (source, start, end, replacement, anchorPattern) =>
   return source.replace(anchorPattern, replacement)
 }
 
+const replaceMarkedAppend = (source, start, end, replacement) => {
+  const marked = new RegExp(`${escapeRegExp(start)}\\n[\\s\\S]*?\\n${escapeRegExp(end)}\\n?`, 'm')
+  if (marked.test(source)) {
+    return source.replace(marked, replacement)
+  }
+  return `${source.trimEnd()}\n\n${replacement}`
+}
+
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
+const removeMarkedBlock = (source, start, end) => {
+  const marked = new RegExp(`${escapeRegExp(start)}\\n[\\s\\S]*?\\n${escapeRegExp(end)}\\n?`, 'm')
+  return source.replace(marked, '')
+}
+
 let renderer = fs.readFileSync(rendererPath, 'utf8')
+renderer = removeMarkedBlock(
+  renderer,
+  '// Reversion semantic minimap runtime patch start',
+  '// Reversion semantic minimap runtime patch end'
+)
 renderer = replaceMarkedBlock(
   renderer,
   '// Lens Design theme payload patch start',
@@ -294,11 +314,67 @@ renderer = replaceMarkedReplacement(
           showSideBar: !!sideBarVisibility2,
           showTabBar: !!tabBarVisibility2
         });`
+  )
+
+if (renderer.includes('const name = "MarkText";') || renderer.includes('// Reversion about product name patch start')) {
+  renderer = replaceMarkedReplacement(
+    renderer,
+    '// Reversion about product name patch start',
+    '// Reversion about product name patch end',
+    `// Reversion about product name patch start
+const name = "Reversion · 反文";
+// Reversion about product name patch end
+`,
+    'const name = "MarkText";'
+  )
+}
+
+renderer = renderer.replace(
+  'createElementBlock("span", _hoisted_1$B, "MarkText")',
+  'createElementBlock("span", _hoisted_1$B, "Reversion")'
 )
 
 fs.writeFileSync(rendererPath, renderer)
 
+const rendererLogoName = renderer.match(/new URL\("(logo-[^"]+\.png)", import\.meta\.url\)/)?.[1]
+if (rendererLogoName) {
+  const rendererLogoPath = path.join(rendererAssets, rendererLogoName)
+  const reversionLogoPath = path.join(root, 'icon', 'lens-marktext-icon.png')
+  if (fs.existsSync(rendererLogoPath) && fs.existsSync(reversionLogoPath)) {
+    fs.copyFileSync(reversionLogoPath, rendererLogoPath)
+  }
+}
+
+const rendererCssPath = fs.readdirSync(rendererAssets)
+  .filter((file) => file.endsWith('.css'))
+  .map((file) => path.join(rendererAssets, file))
+  .find((file) => fs.readFileSync(file, 'utf8').includes('.ag-hide'))
+
+if (rendererCssPath) {
+  let rendererCss = fs.readFileSync(rendererCssPath, 'utf8')
+  rendererCss = replaceMarkedAppend(
+    rendererCss,
+    '/* Reversion runtime styles patch start */',
+    '/* Reversion runtime styles patch end */',
+    `/* Reversion runtime styles patch start */
+${reversionRuntimeCss.trim()}
+/* Reversion runtime styles patch end */
+`
+  )
+  fs.writeFileSync(rendererCssPath, rendererCss)
+}
+
+if (fs.existsSync(rendererIndexPath)) {
+  const rendererIndex = fs.readFileSync(rendererIndexPath, 'utf8').replace(/<title>MarkText<\/title>/g, '<title>Reversion</title>')
+  fs.writeFileSync(rendererIndexPath, rendererIndex)
+}
+
 let main = fs.readFileSync(mainPath, 'utf8')
+main = removeMarkedBlock(
+  main,
+  '  // Reversion Git diff bridge patch start',
+  '  // Reversion Git diff bridge patch end'
+)
 if (main.includes('editorFontFamily')) {
 main = replaceMarkedBlock(
   main,
@@ -396,6 +472,55 @@ main = replaceMarkedBlock(
 `,
   '    const { _args: args2, _openFilesCache } = this;'
 )
+
+if (main.includes('function marktext(keybindings2) {')) {
+  main = replaceMarkedBlock(
+    main,
+    '// Reversion localized product name patch start',
+    '// Reversion localized product name patch end',
+    `// Reversion localized product name patch start
+const reversionDisplayName = /^zh(?:-|$)/i.test(electron.app.getLocale()) ? "反文" : "Reversion";
+const reversionMenuText = {
+  about: /^zh(?:-|$)/i.test(electron.app.getLocale()) ? "关于反文" : "About Reversion",
+  hide: /^zh(?:-|$)/i.test(electron.app.getLocale()) ? "隐藏反文" : "Hide Reversion",
+  quit: /^zh(?:-|$)/i.test(electron.app.getLocale()) ? "退出反文" : "Quit Reversion"
+};
+// Reversion localized product name patch end
+`,
+    'function marktext(keybindings2) {'
+  )
+  const menuStart = main.indexOf('function marktext(keybindings2) {')
+  const menuEnd = main.indexOf('\nfunction view(', menuStart)
+  if (menuStart >= 0 && menuEnd > menuStart) {
+    const beforeMenu = main.slice(0, menuStart)
+    const afterMenu = main.slice(menuEnd)
+    const productMenu = main.slice(menuStart, menuEnd)
+      .replace('label: t("menu.marktext.title")', 'label: reversionDisplayName')
+      .replace('label: t("menu.marktext.about")', 'label: reversionMenuText.about')
+      .replace('label: t("menu.marktext.hide")', 'label: reversionMenuText.hide')
+      .replace('label: t("menu.marktext.quit")', 'label: reversionMenuText.quit')
+    main = `${beforeMenu}${productMenu}${afterMenu}`
+  }
+}
+
+if (main.includes('process.env.MARKTEXT_VERSION =')) {
+main = replaceMarkedBlock(
+    main,
+    '// Reversion application identity patch start',
+    '// Reversion application identity patch end',
+    `// Reversion application identity patch start
+const reversionLegacyUserDataPath = path.join(electron.app.getPath("appData"), "marktext");
+electron.app.setPath("userData", reversionLegacyUserDataPath);
+electron.app.setName("Reversion");
+// Reversion application identity patch end
+`,
+    'process.env.MARKTEXT_VERSION ='
+  )
+}
+
+main = main
+  .replaceAll('message: "MarkText has crashed"', 'message: "Reversion has crashed"')
+  .replaceAll('productName: "marktext"', 'productName: "Reversion"')
 
 if (main.includes('electronUpdater.autoUpdater.on("update-not-available"') && main.includes('const checkUpdates =')) {
   main = replaceMarkedBlock(
@@ -516,10 +641,24 @@ if (releaseVersion) {
   }
   const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
   packageJson.version = releaseVersion
+  packageJson.name = 'reversion'
+  packageJson.productName = 'Reversion'
+  packageJson.description = 'Reversion (反文) — a focused Markdown editor'
   fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+} else {
+  const packagePath = path.join(extractedRoot, 'package.json')
+  if (fs.existsSync(packagePath)) {
+    const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
+    packageJson.name = 'reversion'
+    packageJson.productName = 'Reversion'
+    packageJson.description = 'Reversion (反文) — a focused Markdown editor'
+    fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+  }
 }
 
 fs.writeFileSync(mainPath, main)
 
 console.log(`Patched renderer bundle: ${rendererPath}`)
+if (rendererLogoName) console.log(`Patched renderer logo: ${path.join(rendererAssets, rendererLogoName)}`)
+if (rendererCssPath) console.log(`Patched renderer stylesheet: ${rendererCssPath}`)
 console.log(`Patched main bundle: ${mainPath}`)

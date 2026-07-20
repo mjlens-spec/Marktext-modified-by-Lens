@@ -192,8 +192,14 @@ body {
 
 .markdown-body table {
   display: table;
+  width: 100%;
+  min-width: 100%;
+  max-width: none;
+  table-layout: auto;
+  font-size: 13px;
+  line-height: 1.55;
   border-collapse: collapse;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid var(--claude-line);
   border-radius: 7px;
   background: var(--claude-surface);
@@ -204,11 +210,35 @@ body {
   color: var(--claude-heading);
   font-family: var(--claude-font-ui);
   font-weight: 650;
+  line-height: 1.45;
+  white-space: normal;
 }
 
 .markdown-body table td,
 .markdown-body table th {
+  box-sizing: border-box;
+  min-width: 4.5em;
+  font-size: inherit;
   border-color: var(--claude-line);
+  vertical-align: top;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.markdown-body table td *,
+.markdown-body table th * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+.markdown-body table td:first-child,
+.markdown-body table th:first-child {
+  min-width: 3.25em;
+}
+
+.markdown-body table td:last-child,
+.markdown-body table th:last-child {
+  min-width: 8.5em;
 }
 
 .markdown-body img {
@@ -256,5 +286,14 @@ body {
     max-width: none;
     padding: 0;
     background: #ffffff;
+  }
+
+  .markdown-body table th {
+    white-space: normal;
+  }
+
+  .markdown-body table td,
+  .markdown-body table th {
+    min-width: 0;
   }
 }

@@ -1,8 +1,8 @@
 # Notices
 
-This repository contains Lens-specific themes, icons, and installer scripts for a local MarkText installation. The source tree does not commit MarkText binaries, `app.asar`, or upstream MarkText application source.
+This repository contains Reversion-specific runtime patches, themes, icons, a Quick Look extension, and installer scripts. Reversion is based on MarkText. The source tree does not commit MarkText binaries, `app.asar`, or upstream MarkText application source.
 
-GitHub release assets may include a macOS DMG containing an ad-hoc signed, Lens-modified copy of MarkText for local installation. Those release assets are modified redistributions of MarkText and include this notice plus upstream license materials.
+GitHub release assets may include a macOS DMG containing an ad-hoc signed Reversion build for local installation. Those release assets are modified redistributions of MarkText and include this notice plus upstream license materials.
 
 ## Project License
 
